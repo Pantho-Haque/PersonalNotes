@@ -6,7 +6,7 @@
 
     // Running git config globally
 
-    ```sh
+    ```
         $ git config --global user.email "my@emailaddress.com"
         $ git config --global user.name "myName"
     ```
