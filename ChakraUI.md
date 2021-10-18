@@ -1,6 +1,75 @@
-# layout ---
+- [layout](#layout)
+      - [AspectRatio](#aspectratio)
+      - [Box](#box)
+      - [Center,Circle,Square](#centercirclesquare)
+      - [container](#container)
+      - [Flex,Spacer](#flexspacer)
+      - [Grid,GridItem](#gridgriditem)
+      - [simpleGrid](#simplegrid)
+      - [Stack,HStack,VStack,StackDivider](#stackhstackvstackstackdivider)
+      - [Wrap,WrapItem](#wrapwrapitem)
+- [forms](#forms)
+      - [Button,ButtonGroup](#buttonbuttongroup)
+      - [iconButton](#iconbutton)
+      - [Checkbox,ChekboxGroup](#checkboxchekboxgroup)
+      - [Editable,EditableInput,EditablePreview](#editableeditableinputeditablepreview)
+      - [FormControl,FormLabel,FormErrorMessage,FormHelperText](#formcontrolformlabelformerrormessageformhelpertext)
+      - [Input,InputGroup,InputLeftAddon,InputRightAddon](#inputinputgroupinputleftaddoninputrightaddon)
+      - [numberInput](#numberinput)
+      - [PinInput, PinInputField](#pininput-pininputfield)
+      - [radio](#radio)
+      - [rangeSlider](#rangeslider)
+      - [select](#select)
+      - [slider](#slider)
+      - [Switch](#switch)
+      - [Textarea](#textarea)
+- [data_display](#data_display)
+      - [Badge](#badge)
+      - [CloseButton](#closebutton)
+      - [Code](#code)
+      - [Divider](#divider)
+      - [Kbd](#kbd)
+      - [List,ListItem,ListIcon,OrderedList,UnorderedList](#listlistitemlisticonorderedlistunorderedlist)
+      - [stat](#stat)
+      - [table](#table)
+      - [tag](#tag)
+- [feedback](#feedback)
+      - [Alert,AlertIcon,AlertTitle,AlertDescription](#alertalerticonalerttitlealertdescription)
+      - [CircularProgress, CircularProgressLabel](#circularprogress-circularprogresslabel)
+      - [Progress](#progress)
+      - [skeleton](#skeleton)
+      - [Spinner](#spinner)
+      - [Toast](#toast)
+- [typography](#typography)
+      - [Text](#text)
+      - [Heading](#heading)
+- [overlay](#overlay)
+      - [AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter](#alertdialogalertdialogoverlayalertdialogcontentalertdialogheaderalertdialogbodyalertdialogfooter)
+      - [Drawer](#drawer)
+      - [Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider](#menumenubuttonmenulistmenugroupmenuitemmenuoptiongroupmenuitemoptionmenucommandmenudivider)
+      - [Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton](#modalmodaloverlaymodalcontentmodalheadermodalfootermodalbodymodalclosebutton)
+      - [popoverPopover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,](#popoverpopoverpopovertriggerpopovercontentpopoverheaderpopoverbodypopoverfooterpopoverarrowpopoverclosebutton)
+      - [Tooltip](#tooltip)
+- [discloser](#discloser)
+      - [Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,](#accordionaccordionitemaccordionbuttonaccordionpanelaccordionicon)
+      - [tabs](#tabs)
+      - [visually hidden](#visually-hidden)
+- [Navigation](#navigation)
+      - [breadcrumb](#breadcrumb)
+      - [link](#link)
+      - [linkOverlay](#linkoverlay)
+- [media&icons](#mediaicons)
+      - [avatar](#avatar)
+      - [icon](#icon)
+      - [image](#image)
+- [others](#others)
+      - [portal](#portal)
+      - [transitions](#transitions)
+- [hook](#hook)
 
-## AspectRatio
+# layout
+
+#### AspectRatio
 
         <AspectRatio ratio={Common values are:
                                             `21/9`,
@@ -12,15 +81,11 @@
             <></>
         </AspectRatio>
 
----
-
-## Box
+#### Box
 
         <Box></Box>
 
----
-
-## Center,Circle,Square
+#### Center,Circle,Square
 
         <Center size="" >
         </Center>
@@ -31,25 +96,21 @@
         <Square size="" >
         </Square>
 
----
-
-## container
+#### container
 
         <Container centerContent colorScheme="" size="" variant="">
         </Container>
 
----
+#### Flex,Spacer
 
-## Flex,Spacer <!--Full width, equal Spacing -->
-
+      <!--Full width, equal Spacing -->
         <Flex>
           <Spacer />
         </Flex>
 
----
+#### Grid,GridItem
 
-## Grid,GridItem <!--The children start at the beginning, the 1/3 mark and 2/3 mark -->
-
+      <!--The children start at the beginning, the 1/3 mark and 2/3 mark -->
         <Grid
           templateColumns="1fr 1fr"     <!-- ____ -->
           autoColumns=""
@@ -71,9 +132,7 @@
             />
         </Grid>
 
----
-
-## simpleGrid
+#### simpleGrid
 
         <SimpleGrid
             minChildWidth=""
@@ -85,10 +144,9 @@
 
         </SimpleGrid>
 
----
+#### Stack,HStack,VStack,StackDivider <!-- for fixed spacing-->
 
-## Stack,HStack,VStack,StackDivider <!-- for fixed spacing-->
-
+```
         <Stack
             divider={<StackDivider borderColor=""/>}
             align=""
@@ -101,11 +159,11 @@
           >
         </Stack>
 
--        <HStack></HStack>
-         <VStack></VStack>
--
+        <HStack></HStack>
+        <VStack></VStack>
+```
 
-## Wrap,WrapItem
+#### Wrap,WrapItem
 
         <Wrap
             align=""
@@ -119,7 +177,7 @@
 
 # forms
 
-## Button,ButtonGroup
+#### Button,ButtonGroup
 
         <ButtonGroup
           colorScheme=""
@@ -146,7 +204,7 @@
             ></Button>
         </ButtonGroup>
 
-## iconButton
+#### iconButton
 
     <IconButton
           icon={<AiFillHeart />}
@@ -162,7 +220,7 @@
             spinner={< />}
       />
 
-## Checkbox,ChekboxGroup
+#### Checkbox,ChekboxGroup
 
     <CheckboxGroup
         colorScheme=""
@@ -196,7 +254,7 @@
         </Checkbox>
     </CheckboxGroup>
 
-## Editable,EditableInput,EditablePreview
+#### Editable,EditableInput,EditablePreview
 
     <Editable
         defaultValue="take this"
@@ -222,7 +280,7 @@
         <EditableInput/>
       </Editable>
 
-## FormControl,FormLabel,FormErrorMessage,FormHelperText
+#### FormControl,FormLabel,FormErrorMessage,FormHelperText
 
     <FormControl
         as="fieldset"
@@ -247,7 +305,7 @@
         <FormHelperText>helpertext</FormHelperText>
       </FormControl>
 
-## Input,InputGroup,InputLeftAddon,InputRightAddon
+#### Input,InputGroup,InputLeftAddon,InputRightAddon
 
     <InputGroup>
         <InputLeftAddon
@@ -278,7 +336,7 @@
         <InputRightAddon children=""/>
       </InputGroup>
 
-## numberInput
+#### numberInput
 
     <NumberInput
         name=""
@@ -322,7 +380,7 @@
 
     </NumberInput>
 
-## PinInput, PinInputField
+#### PinInput, PinInputField
 
     <HStack>
             <PinInput
@@ -348,11 +406,11 @@
             </PinInput>
       </HStack>
 
-## radio
+#### radio
 
-## rangeSlider
+#### rangeSlider
 
-## select
+#### select
 
     <Select
       placeholder=""
@@ -374,9 +432,9 @@
 
     </Select>
 
-## slider
+#### slider
 
-## Switch
+#### Switch
 
     <Switch
         name=""
@@ -392,13 +450,13 @@
         onFocus={()=>{}}
     />
 
-## Textarea
+#### Textarea
 
     <Textarea/>
 
 # data_display
 
-## Badge
+#### Badge
 
     <Badge
       colorScheme="green"
@@ -407,7 +465,7 @@
       badgename
     </Badge>
 
-## CloseButton
+#### CloseButton
 
     <CloseButton
         size=""
@@ -416,7 +474,7 @@
         isDisabled
     />
 
-## Code
+#### Code
 
     <Code
       colorScheme="red"
@@ -425,18 +483,18 @@
       console.log("hi");
     </Code>
 
-## Divider
+#### Divider
 
     <Divider
         orientation=""
         variant="dashed"
     />
 
-## Kbd
+#### Kbd
 
     <Kbd> </Kbd>
 
-## List,ListItem,ListIcon,OrderedList,UnorderedList
+#### List,ListItem,ListIcon,OrderedList,UnorderedList
 
     <List spacing={3}>
 
@@ -455,15 +513,15 @@
 
     </List>
 
-## stat
+#### stat
 
-## table
+#### table
 
-## tag
+#### tag
 
 # feedback
 
-## Alert,AlertIcon,AlertTitle,AlertDescription
+#### Alert,AlertIcon,AlertTitle,AlertDescription
 
     <Alert
       status=""
@@ -474,7 +532,7 @@
       <AlertDescription></AlertDescription>
     </Alert>
 
-## CircularProgress, CircularProgressLabel
+#### CircularProgress, CircularProgressLabel
 
       <CircularProgress
           value={}
@@ -485,7 +543,7 @@
             </CircularProgressLabel>
       </CircularProgress>
 
-## Progress
+#### Progress
 
       <Progress
         value={}
@@ -499,7 +557,7 @@
         isAnimated
       />
 
-## skeleton
+#### skeleton
 
       <SkeletonCircle
           size=""
@@ -519,7 +577,7 @@
           noOfLines={} spacing="" h="" w=""
       />
 
-## Spinner
+#### Spinner
 
       <Spinner
           color=""
@@ -529,7 +587,7 @@
           speed=""
       />
 
-## Toast
+#### Toast
 
       const toast=useToast();   // must be before return()
       <Button
@@ -555,7 +613,7 @@
 
 # typography
 
-## Text
+#### Text
 
     <Text
         fontSize=""
@@ -569,7 +627,7 @@
       >
       </Text>
 
-## Heading
+#### Heading
 
       <Heading
         as=""
@@ -582,7 +640,7 @@
 
 # overlay
 
-## AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter
+#### AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter
 
       import {useDisclouser} from '@chakra-ui/react
       const { isOpen, onOpen, onClose } = useDisclosure(); //before return
@@ -611,7 +669,7 @@
 
       </AlertDialog>
 
-## Drawer
+#### Drawer
 
       import {useDisclouser} from '@chakra-ui/react
       const { isOpen, onOpen, onClose } = useDisclosure();
@@ -639,7 +697,7 @@
           </DrawerContent>
       </Drawer>
 
-## Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider
+#### Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider
 
     <Menu
           closeOnSelect={true}
@@ -694,7 +752,7 @@
           </MenuList>
       </Menu>
 
-## Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton
+#### Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton
 
       import {useDisclosure} from '@chakra-ui/react
       const { isOpen, onOpen, onClose } = useDisclosure();
@@ -726,7 +784,7 @@
           </ModalContent>
       </Modal>
 
-## popoverPopover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,
+#### popoverPopover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,
 
       <Popover
           isOpen={}
@@ -759,7 +817,7 @@
 
       </Popover>
 
-## Tooltip
+#### Tooltip
 
       <Tooltip
           label="you have hovered !"
@@ -779,7 +837,7 @@
 
 # discloser
 
-## Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
+#### Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
 
     <Accordion
         allowMultiple
@@ -807,30 +865,30 @@
 
     </Accordion>
 
-## tabs
+#### tabs
 
-## visually hidden
+#### visually hidden
 
 # Navigation
 
-## breadcrumb
+#### breadcrumb
 
-## link
+#### link
 
-## linkOverlay
+#### linkOverlay
 
 # media&icons
 
-## avatar
+#### avatar
 
-## icon
+#### icon
 
-## image
+#### image
 
 # others
 
-## portal
+#### portal
 
-## transitions
+#### transitions
 
 # hook
