@@ -4,10 +4,11 @@
 
 ### Config
 
-    // Running git config globally
+    
 ```
-$ git config --global user.email "my@emailaddress.com"
-$ git config --global user.name "myName"
+    // Running git config globally
+    $ git config --global user.email "my@emailaddress.com"
+    $ git config --global user.name "myName"
 ```
 
 
