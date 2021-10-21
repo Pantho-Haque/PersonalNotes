@@ -1,76 +1,81 @@
 - [layout](#layout)
-      - [AspectRatio](#aspectratio)
-      - [Box](#box)
-      - [Center,Circle,Square](#centercirclesquare)
-      - [container](#container)
-      - [Flex,Spacer](#flexspacer)
-      - [Grid,GridItem](#gridgriditem)
-      - [simpleGrid](#simplegrid)
-      - [Stack,HStack,VStack,StackDivider](#stackhstackvstackstackdivider)
-      - [Wrap,WrapItem](#wrapwrapitem)
+  - [AspectRatio](#aspectratio)
+  - [Box](#box)
+  - [Center_Circle_Square](#center_circle_square)
+  - [Container](#container)
+  - [Flex](#flex)
+  - [Grid](#grid)
+  - [SimpleGrid](#simplegrid)
+  - [Stack](#stack)
+  - [Wrap](#wrap)
 - [forms](#forms)
-      - [Button,ButtonGroup](#buttonbuttongroup)
-      - [iconButton](#iconbutton)
-      - [Checkbox,ChekboxGroup](#checkboxchekboxgroup)
-      - [Editable,EditableInput,EditablePreview](#editableeditableinputeditablepreview)
-      - [FormControl,FormLabel,FormErrorMessage,FormHelperText](#formcontrolformlabelformerrormessageformhelpertext)
-      - [Input,InputGroup,InputLeftAddon,InputRightAddon](#inputinputgroupinputleftaddoninputrightaddon)
-      - [numberInput](#numberinput)
-      - [PinInput, PinInputField](#pininput-pininputfield)
-      - [radio](#radio)
-      - [rangeSlider](#rangeslider)
-      - [select](#select)
-      - [slider](#slider)
-      - [Switch](#switch)
-      - [Textarea](#textarea)
+  - [Button](#button)
+  - [IconButton](#iconbutton)
+  - [Checkbox](#checkbox)
+  - [Editable](#editable)
+  - [FormControl](#formcontrol)
+  - [Input](#input)
+  - [NumberInput](#numberinput)
+  - [PinInput](#pininput)
+  - [radio](#radio)
+  - [rangeSlider](#rangeslider)
+  - [Select](#select)
+  - [slider](#slider)
+  - [Switch](#switch)
+  - [Textarea](#textarea)
 - [data_display](#data_display)
-      - [Badge](#badge)
-      - [CloseButton](#closebutton)
-      - [Code](#code)
-      - [Divider](#divider)
-      - [Kbd](#kbd)
-      - [List,ListItem,ListIcon,OrderedList,UnorderedList](#listlistitemlisticonorderedlistunorderedlist)
-      - [stat](#stat)
-      - [table](#table)
-      - [tag](#tag)
+  - [Badge](#badge)
+  - [CloseButton](#closebutton)
+  - [Code](#code)
+  - [Divider](#divider)
+  - [Kbd](#kbd)
+  - [List](#list)
+  - [stat](#stat)
+  - [table](#table)
+  - [tag](#tag)
 - [feedback](#feedback)
-      - [Alert,AlertIcon,AlertTitle,AlertDescription](#alertalerticonalerttitlealertdescription)
-      - [CircularProgress, CircularProgressLabel](#circularprogress-circularprogresslabel)
-      - [Progress](#progress)
-      - [skeleton](#skeleton)
-      - [Spinner](#spinner)
-      - [Toast](#toast)
-- [typography](#typography)
-      - [Text](#text)
-      - [Heading](#heading)
+  - [Alert](#alert)
+  - [CircularProgress](#circularprogress)
+  - [Progress](#progress)
+  - [skeleton](#skeleton)
+  - [Spinner](#spinner)
+  - [Toast](#toast)
+- [Typography](#typography)
+  - [Text](#text)
+  - [Heading](#heading)
 - [overlay](#overlay)
-      - [AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter](#alertdialogalertdialogoverlayalertdialogcontentalertdialogheaderalertdialogbodyalertdialogfooter)
-      - [Drawer](#drawer)
-      - [Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider](#menumenubuttonmenulistmenugroupmenuitemmenuoptiongroupmenuitemoptionmenucommandmenudivider)
-      - [Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton](#modalmodaloverlaymodalcontentmodalheadermodalfootermodalbodymodalclosebutton)
-      - [popoverPopover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,](#popoverpopoverpopovertriggerpopovercontentpopoverheaderpopoverbodypopoverfooterpopoverarrowpopoverclosebutton)
-      - [Tooltip](#tooltip)
+  - [AlertDialog](#alertdialog)
+  - [Drawer](#drawer)
+  - [Menu](#menu)
+  - [Modal](#modal)
+  - [Popover](#popover)
+  - [Tooltip](#tooltip)
 - [discloser](#discloser)
-      - [Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,](#accordionaccordionitemaccordionbuttonaccordionpanelaccordionicon)
-      - [tabs](#tabs)
-      - [visually hidden](#visually-hidden)
+  - [Accordion](#accordion)
+  - [tabs](#tabs)
+  - [visually hidden](#visually-hidden)
 - [Navigation](#navigation)
-      - [breadcrumb](#breadcrumb)
-      - [link](#link)
-      - [linkOverlay](#linkoverlay)
+  - [breadcrumb](#breadcrumb)
+  - [link](#link)
+  - [linkOverlay](#linkoverlay)
 - [media&icons](#mediaicons)
-      - [avatar](#avatar)
-      - [icon](#icon)
-      - [image](#image)
+  - [avatar](#avatar)
+  - [icon](#icon)
+  - [image](#image)
 - [others](#others)
-      - [portal](#portal)
-      - [transitions](#transitions)
+  - [portal](#portal)
+  - [transitions](#transitions)
 - [hook](#hook)
 
 # layout
 
-#### AspectRatio
+## AspectRatio
 
+```
+    AspectRatio
+```
+
+```
         <AspectRatio ratio={Common values are:
                                             `21/9`,
                                             `16/9`,
@@ -80,13 +85,25 @@
                                         }>
             <></>
         </AspectRatio>
+```
 
-#### Box
+## Box
 
+```
+    Box
+```
+
+```
         <Box></Box>
+```
 
-#### Center,Circle,Square
+## Center_Circle_Square
 
+```
+  Center,Circle,Square
+```
+
+```
         <Center size="" >
         </Center>
         ---
@@ -95,21 +112,38 @@
         ---
         <Square size="" >
         </Square>
+```
 
-#### container
+## Container
 
+```
+  Container
+```
+
+```
         <Container centerContent colorScheme="" size="" variant="">
         </Container>
+```
 
-#### Flex,Spacer
+## Flex
 
-      <!--Full width, equal Spacing -->
+```
+  Flex,Spacer
+```
+
+```
         <Flex>
           <Spacer />
         </Flex>
+```
 
-#### Grid,GridItem
+## Grid
 
+```
+  Grid,GridItem
+```
+
+```
       <!--The children start at the beginning, the 1/3 mark and 2/3 mark -->
         <Grid
           templateColumns="1fr 1fr"     <!-- ____ -->
@@ -131,9 +165,15 @@
 
             />
         </Grid>
+```
 
-#### simpleGrid
+## SimpleGrid
 
+```
+  SimpleGrid
+```
+
+```
         <SimpleGrid
             minChildWidth=""
             columns={[1,2,3]}
@@ -143,8 +183,13 @@
         >
 
         </SimpleGrid>
+```
 
-#### Stack,HStack,VStack,StackDivider <!-- for fixed spacing-->
+## Stack
+
+```
+  Stack,HStack,VStack,StackDivider <!-- for fixed spacing-->
+```
 
 ```
         <Stack
@@ -163,8 +208,13 @@
         <VStack></VStack>
 ```
 
-#### Wrap,WrapItem
+## Wrap
 
+```
+  Wrap,WrapItem
+```
+
+```
         <Wrap
             align=""
             justify=""
@@ -174,11 +224,17 @@
         >
             <WrapItem>   </WrapItem>
         </Wrap>
+```
 
 # forms
 
-#### Button,ButtonGroup
+## Button
 
+```
+    Button,ButtonGroup
+```
+
+```
         <ButtonGroup
           colorScheme=""
           variant=""
@@ -203,9 +259,15 @@
                 spinnerPlacement=""
             ></Button>
         </ButtonGroup>
+```
 
-#### iconButton
+## IconButton
 
+```
+    IconButton
+```
+
+```
     <IconButton
           icon={<AiFillHeart />}
           aria-label=""
@@ -219,9 +281,15 @@
           isLoading
             spinner={< />}
       />
+```
 
-#### Checkbox,ChekboxGroup
+## Checkbox
 
+```
+    Checkbox,ChekboxGroup
+```
+
+```
     <CheckboxGroup
         colorScheme=""
         variant=""
@@ -253,9 +321,15 @@
           display
         </Checkbox>
     </CheckboxGroup>
+```
 
-#### Editable,EditableInput,EditablePreview
+## Editable
 
+```
+  Editable,EditableInput,EditablePreview
+```
+
+```
     <Editable
         defaultValue="take this"
         placeholder=""
@@ -279,9 +353,15 @@
         <EditablePreview/>
         <EditableInput/>
       </Editable>
+```
 
-#### FormControl,FormLabel,FormErrorMessage,FormHelperText
+## FormControl
 
+```
+    FormControl,FormLabel,FormErrorMessage,FormHelperText
+```
+
+```
     <FormControl
         as="fieldset"
         isRequired
@@ -304,9 +384,15 @@
 
         <FormHelperText>helpertext</FormHelperText>
       </FormControl>
+```
 
-#### Input,InputGroup,InputLeftAddon,InputRightAddon
+## Input
 
+```
+    Input,InputGroup,InputLeftAddon,InputRightAddon
+```
+
+```
     <InputGroup>
         <InputLeftAddon
           children={</>  }
@@ -335,9 +421,15 @@
 
         <InputRightAddon children=""/>
       </InputGroup>
+```
 
-#### numberInput
+## NumberInput
 
+```
+  NumberInput
+```
+
+```
     <NumberInput
         name=""
         defaultValue={20}
@@ -380,8 +472,15 @@
 
     </NumberInput>
 
-#### PinInput, PinInputField
+```
 
+## PinInput
+
+```
+    PinInput, PinInputField,HStack
+```
+
+```
     <HStack>
             <PinInput
                 type=""
@@ -405,13 +504,19 @@
                 <PinInputField/>
             </PinInput>
       </HStack>
+```
 
-#### radio
+## radio
 
-#### rangeSlider
+## rangeSlider
 
-#### select
+## Select
 
+```
+    Select
+```
+
+```
     <Select
       placeholder=""
       size=""
@@ -431,10 +536,15 @@
       <option value="">1</option>
 
     </Select>
+```
 
-#### slider
+## slider
 
-#### Switch
+## Switch
+
+```
+    Switch
+```
 
     <Switch
         name=""
@@ -450,52 +560,93 @@
         onFocus={()=>{}}
     />
 
-#### Textarea
+## Textarea
 
+```
+  Textarea
+```
+
+```
     <Textarea/>
+```
 
 # data_display
 
-#### Badge
+## Badge
 
+```
+  Badge
+```
+
+```
     <Badge
       colorScheme="green"
       variant="solid"
     >
       badgename
     </Badge>
+```
 
-#### CloseButton
+## CloseButton
 
+```
+    CloseButton
+```
+
+```
     <CloseButton
         size=""
         colorScheme=""
         variant=""
         isDisabled
     />
+```
 
-#### Code
+## Code
 
+```
+  Code
+```
+
+```
     <Code
       colorScheme="red"
       variant="solid"
     >
       console.log("hi");
     </Code>
+```
 
-#### Divider
+## Divider
 
+```
+  Divider
+```
+
+```
     <Divider
         orientation=""
         variant="dashed"
     />
+```
 
-#### Kbd
+## Kbd
 
+```
+    Kbd
+```
+
+```
     <Kbd> </Kbd>
+```
 
-#### List,ListItem,ListIcon,OrderedList,UnorderedList
+## List
 
+```
+  List,ListItem,ListIcon,OrderedList,UnorderedList
+```
+
+```
     <List spacing={3}>
 
         <ListItem>
@@ -512,17 +663,23 @@
         </OrderedList>
 
     </List>
+```
 
-#### stat
+## stat
 
-#### table
+## table
 
-#### tag
+## tag
 
 # feedback
 
-#### Alert,AlertIcon,AlertTitle,AlertDescription
+## Alert
 
+```
+  Alert,AlertIcon,AlertTitle,AlertDescription
+```
+
+```
     <Alert
       status=""
       variant=""
@@ -531,9 +688,15 @@
       <AlertTitle></AlertTitle>
       <AlertDescription></AlertDescription>
     </Alert>
+```
 
-#### CircularProgress, CircularProgressLabel
+## CircularProgress
 
+```
+    CircularProgress, CircularProgressLabel
+```
+
+```
       <CircularProgress
           value={}
           size=""
@@ -542,9 +705,15 @@
             <CircularProgressLabel>
             </CircularProgressLabel>
       </CircularProgress>
+```
 
-#### Progress
+## Progress
 
+```
+  Progress
+```
+
+```
       <Progress
         value={}
         max={}
@@ -556,9 +725,15 @@
         hasStripe
         isAnimated
       />
+```
 
-#### skeleton
+## skeleton
 
+```
+    Skeleton, SkeletonCircle, SkeletonText
+```
+
+```
       <SkeletonCircle
           size=""
       />
@@ -576,9 +751,15 @@
       <SkeletonText
           noOfLines={} spacing="" h="" w=""
       />
+```
 
-#### Spinner
+## Spinner
 
+```
+  Spinner
+```
+
+```
       <Spinner
           color=""
           emptyColor=""
@@ -586,13 +767,19 @@
           thickness=""
           speed=""
       />
+```
 
-#### Toast
+## Toast
 
+```
+    useToast
+```
+
+```
       const toast=useToast();   // must be before return()
       <Button
           onClick={()=>{
-              toast({
+              toasuseToast t({
                 position:"top | top-right | top-left | bottom | bottom-right | bottom-left",
                 title:"title here",
                 description:"description here",
@@ -610,11 +797,17 @@
       >
         press
       </Button>
+```
 
-# typography
+# Typography
 
-#### Text
+## Text
 
+```
+  Text
+```
+
+```
     <Text
         fontSize=""
         isTruncated
@@ -626,8 +819,15 @@
         orientation=""
       >
       </Text>
+```
 
-#### Heading
+## Heading
+
+```
+    Heading
+```
+
+```
 
       <Heading
         as=""
@@ -637,11 +837,17 @@
         orientation=""
       >
       </Heading>
+```
 
 # overlay
 
-#### AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter
+## AlertDialog
 
+```
+  AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogBody,AlertDialogFooter
+```
+
+```
       import {useDisclouser} from '@chakra-ui/react
       const { isOpen, onOpen, onClose } = useDisclosure(); //before return
       <Button onClick={onOpen}>Open</Button>
@@ -668,9 +874,15 @@
         </AlertDialogContent>
 
       </AlertDialog>
+```
 
-#### Drawer
+## Drawer
 
+```
+    Drawer,,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter
+```
+
+```
       import {useDisclouser} from '@chakra-ui/react
       const { isOpen, onOpen, onClose } = useDisclosure();
       <Button onClick={onOpen}>Open</Button>
@@ -696,9 +908,15 @@
             <DrawerFooter onClick={onClose}> footer </DrawerFooter>
           </DrawerContent>
       </Drawer>
+```
 
-#### Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider
+## Menu
 
+```
+    Menu,MenuButton,MenuList,MenuGroup,MenuItem,MenuOptionGroup,MenuItemOption,MenuCommand,MenuDivider
+```
+
+```
     <Menu
           closeOnSelect={true}
           closeOnBlur={true}
@@ -751,10 +969,16 @@
                 <MenuCommand children=""/>
           </MenuList>
       </Menu>
+```
 
-#### Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton
+## Modal
 
-      import {useDisclosure} from '@chakra-ui/react
+```
+  Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,
+  useDisclosure
+```
+
+```
       const { isOpen, onOpen, onClose } = useDisclosure();
       <Button onClick={onOpen}>Open</Button>
 
@@ -783,9 +1007,15 @@
             <ModalFooter>  </ModalFooter>
           </ModalContent>
       </Modal>
+```
 
-#### popoverPopover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,
+## Popover
 
+```
+    Popover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,
+```
+
+```
       <Popover
           isOpen={}
           onOpen={}
@@ -816,9 +1046,15 @@
           </PopoverContent>
 
       </Popover>
+```
 
-#### Tooltip
+## Tooltip
 
+```
+  Tooltip
+```
+
+```
       <Tooltip
           label="you have hovered !"
             placement=""
@@ -834,11 +1070,17 @@
           >
         hover meh ... hehe !
       </Tooltip>
+```
 
 # discloser
 
-#### Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
+## Accordion
 
+```
+  Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
+```
+
+```
     <Accordion
         allowMultiple
         allowToggle
@@ -864,31 +1106,32 @@
       </AccordionItem>
 
     </Accordion>
+```
 
-#### tabs
+## tabs
 
-#### visually hidden
+## visually hidden
 
 # Navigation
 
-#### breadcrumb
+## breadcrumb
 
-#### link
+## link
 
-#### linkOverlay
+## linkOverlay
 
 # media&icons
 
-#### avatar
+## avatar
 
-#### icon
+## icon
 
-#### image
+## image
 
 # others
 
-#### portal
+## portal
 
-#### transitions
+## transitions
 
 # hook
