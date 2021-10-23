@@ -38,7 +38,8 @@ export const getPosts = (req) => {
     //data modification
 
 ```js
-function fetchData() {
-  api.getPosts().then((data) => console.log(data));
-}
+  import * as api from '../helpers';
+  function fetchData() {
+    api.getPosts().then((data) => console.log(data));
+  }
 ```
