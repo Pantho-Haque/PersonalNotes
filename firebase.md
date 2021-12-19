@@ -30,7 +30,7 @@
 ## get the data 
 
 ```js 
-    import {ref,onValue,set} from 'firebase/database'
+    import {ref,onValue} from 'firebase/database'
     import {db} from "../../firebase.js"
 
     const [state,setState]=useState({});
