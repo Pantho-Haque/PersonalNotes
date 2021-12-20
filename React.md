@@ -12,7 +12,25 @@
 - [List and keys](#list-and-keys)
 - [Form Handling](#form-handling)
 - [Higher Order Component](#higher-order-component)
+    - [withCounter.jsx(Pattern)](#withcounterjsxpattern)
+    - [ClickCounter.jsx](#clickcounterjsx)
+    - [HoverCounter.jsx](#hovercounterjsx)
 - [Render Prop](#render-prop)
+    - [ClickCounter.jsx](#clickcounterjsx-1)
+    - [HoverCounter.jsx](#hovercounterjsx-1)
+    - [Counter.jsx(Pattern)](#counterjsxpattern)
+    - [App.jsx(Consumer)](#appjsxconsumer)
+- [Context API](#context-api)
+    - [creat your own](#creat-your-own)
+    - [Providing](#providing)
+    - [Consumer](#consumer)
+- [useState](#usestate)
+    - [create your own useState](#create-your-own-usestate)
+    - [Rules](#rules)
+    - [syntax](#syntax)
+- [useEffect](#useeffect)
+    - [side effect](#side-effect)
+    - [syntax](#syntax-1)
 
 ### installation
 
@@ -84,6 +102,8 @@ classComp.print();
 ```jsx
 //creating component
 function Comp() {
+  function ab() {}
+  const bc = () => {};
   return <>// element</>;
 }
 
@@ -180,11 +200,14 @@ class Comp extends React.Component {
 /************************************************************/
 
 
-  componentDidMount() {
-    //after updating dom this function calls
+  componentDidMount(prevState,prevProps) {
+    // after updating dom this function calls
   }
-  componentWillUnmount() {
-    //before unmounting the app
+  componentDidUpdate(prevState,prevProps){
+    // calls in every update
+  }
+  componentWillUnmount(prevState,prevProps) {
+    // before unmounting the app
   }
 
   shouldComponentUpdate(nextProps,nextStates){
@@ -416,8 +439,8 @@ export default class Form extends React.Component {
 
 :File:HOC
 
+##### withCounter.jsx(Pattern)
 
-:withCounter.jsx
 ```jsx
 import React from "react";
 
@@ -446,8 +469,8 @@ export default withCounter;
 
 :in actual component
 
+##### ClickCounter.jsx
 
-:ClickCounter.jsx
 ```jsx
 import withCounter from "./HOC/withCounter";
 
@@ -465,7 +488,8 @@ const ClickCounter = (props) => {
 export default withCounter(ClickCounter);
 ```
 
-:HoverCounter.jsx
+##### HoverCounter.jsx
+
 ```jsx
 import withCounter from "./HOC/withCounter";
 
@@ -483,7 +507,7 @@ export default withCounter(HoverCounter);
 
 ### Render Prop
 
-:ClickCounter.jsx
+##### ClickCounter.jsx
 
 ```jsx
 import React from "react";
@@ -499,7 +523,7 @@ export default function ClickCounter({ count, incrementCount }) {
 }
 ```
 
-: HoverCounter.jsx
+##### HoverCounter.jsx
 
 ```jsx
 import React from "react";
@@ -513,7 +537,7 @@ export default function HoverCounter({ count, incrementCount }) {
 }
 ```
 
-:Counter.jsx
+##### Counter.jsx(Pattern)
 
 ```jsx
 import React from "react";
@@ -537,7 +561,7 @@ class Counter extends React.Component {
 export default Counter;
 ```
 
-:App.jsx
+##### App.jsx(Consumer)
 
 ```jsx
 <Counter>
@@ -545,4 +569,185 @@ export default Counter;
     <ClickCounter count={counter} incrementCount={incrementCount} />
   )}
 </Counter>
+```
+
+### Context API
+
+##### creat your own
+
+```js
+// we obviously will use the built in react context api
+class Context {
+  constructor(value) {
+    this.value = value;
+  }
+
+  // provider
+  Provider = ({ children, value }) => {
+    this.value = value;
+    return children;
+  };
+
+  // consumer
+  Consumer = ({ children }) => children(this.value);
+}
+
+function createContext(value = null) {
+  const context = new Context(value);
+  return {
+    Provider: context.Provider,
+    Consumer: context.Consumer,
+  };
+}
+
+export default createContext;
+```
+
+##### Providing
+
+```jsx
+const themeContext = React.createContext();
+
+state = {
+  theme: "light",
+  switchTheme: () => {
+    this.setState(({ theme }) => {
+      if (theme === "dark") {
+        return {
+          theme: "light",
+        };
+      }
+      return {
+        theme: "dark",
+      };
+    });
+  },
+};
+
+<ThemeContext.Provider value={this.state}>
+  <Section />
+</ThemeContext.Provider>;
+```
+
+##### Consumer
+
+```jsx
+
+/************************************************************/
+  //inside return
+
+  <ThemeContext.Consumer>
+  {
+    ({theme,switchTheme})=>(
+      <HoverCounter
+        theme={theme}
+        switchTheme={switchTheme}
+      />
+    )
+  }
+  </ThemeContext.Consumer>
+
+
+/************************************************************/
+  // outside return for class component
+
+export default function Content(){
+  const {theme,switchTheme}=this.context;
+  render (){
+    return(
+      <></>
+    )
+  }
+}
+
+Content.contextType=ThemeContext
+
+
+/************************************************************/
+  // outside return for function component
+
+export default function Content(){
+  const {theme , switchTheme }=React.useContext(ThemeContext);
+  return (
+    <></>
+  )
+}
+
+```
+
+### useState
+
+##### create your own useState
+
+```jsx
+const state = []; //[0:[value,setter],1:[value,setter]]
+let stateIndex = -1;
+function usesStat(defaultValue) {
+  const index = ++stateIndex;
+  if (states[index]) return states[index];
+
+  const setValue = (newValue) => {
+    states[index][0] = newValue;
+    renderWithSumit();
+  };
+
+  const returnArray = [defaultValue.setValue];
+  states[index] = returnArray;
+  return returnArray;
+}
+function renderWithSumit() {
+  stateIndex = -1;
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
+```
+
+##### Rules
+
+1.  must be declare in top level.Not even inside of if-statement or function
+2.  setValue function wont merge the result.
+
+##### syntax
+
+```jsx
+// declare
+const [value, setValue] = React.useState({});
+
+// change the value
+setValue({ newValue });
+
+// change the value depending the value of previous state
+setValue((prevState) => {
+  // modify the value of previous state
+  return newValue;
+});
+```
+
+### useEffect
+
+##### side effect
+
+1.  Fetching Data
+2.  Updating Dom
+3.  Setting any Subscription
+4.  Timer
+
+##### syntax
+```jsx
+  useEffect(()=>{
+    // calls in every render 
+  });
+
+  useEffect(()=>{
+    // calls if var changes any value 
+  },[var]);
+
+  useEffect(()=>{
+    // calls only once 
+  },[]);
+
+  useEffect(()=>{
+    return()=>{
+      // if we return a function, then it will work like componentWillUnmount() lifecycle
+    }
+  },[var]);
 ```
