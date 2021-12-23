@@ -31,6 +31,11 @@
 - [useEffect](#useeffect)
     - [side effect](#side-effect)
     - [syntax](#syntax-1)
+- [React.memo()](#reactmemo)
+- [useCallback()](#usecallback)
+- [useMemo()](#usememo)
+- [useRef()](#useref)
+- [UseReducer()](#usereducer)
 
 ### installation
 
@@ -666,6 +671,7 @@ Content.contextType=ThemeContext
 /************************************************************/
   // outside return for function component
 
+import ThemeContext from "..."
 export default function Content(){
   const {theme , switchTheme }=React.useContext(ThemeContext);
   return (
@@ -732,17 +738,18 @@ setValue((prevState) => {
 4.  Timer
 
 ##### syntax
+
 ```jsx
   useEffect(()=>{
-    // calls in every render 
+    // calls in every render
   });
 
   useEffect(()=>{
-    // calls if var changes any value 
+    // calls if var changes any value
   },[var]);
 
   useEffect(()=>{
-    // calls only once 
+    // calls only once
   },[]);
 
   useEffect(()=>{
@@ -750,4 +757,98 @@ setValue((prevState) => {
       // if we return a function, then it will work like componentWillUnmount() lifecycle
     }
   },[var]);
+```
+
+### React.memo()
+
+This is a Higher Order Component which works as componentShouldUpdate() lifecycle.
+
+```jsx
+function Title() {
+  return <></>;
+}
+
+export default React.memo(Title);
+```
+
+### useCallback()
+
+in normal call when we pass a function through props ,
+its reference changes in every render and the new
+component renders continously . to prevent this
+unintentional rerender we can use this callack function.
+
+```jsx
+// cache a function body and remembers function reference
+const incrementByOne = useCallback(() => {
+  // remembers the function, only forget when the dependencies are being changed
+}, [dependencies]);
+```
+
+### useMemo()
+
+in some cases we dont need the value we got from a
+functional component. to prevent this complication we
+can remember the return value of that function and
+can change it when we need to.
+
+```jsx
+const inEvenOdd = useMemo(() => {
+  // remembers the return value , only forget when the dependencies are being changed
+}, [dependencies]);
+```
+
+### useRef()
+
+```jsx
+//to make a reference for a particular element.
+const inputRef = useRef(null);
+
+useEffect(()=>{
+  // the tag will store in the current object of the inputRef constant.
+  inputRef.current.focus();
+})
+
+// reference must be declared in ref props of the targeted element
+<input ref={inutRef} type="text" placeholder="enter something" />
+
+
+/************************************************************/
+
+  // forwardRef()
+  // passing a reference through a component
+  // cannot pass a reference as we do for props
+
+// in child component
+function Input({type,placeholder},ref){
+  return (
+    <input ref={ref} type={type} placeholder={placeholder}/>
+  )
+}
+const forwardedInput = React.forwardRef(Input)
+
+export default forwardedInput;
+
+/************************************************************/
+
+  // useRef() as storage
+  const inputRef = useRef(null);
+  inputRef.current={dataYouWantToPut};
+  // changing a state make a component
+  //rerender but changing a reference value wont make this component rerender.
+  // if in any case the component rerenders,
+  //the value we set in a ref.current object wont be erased.
+
+```
+
+### UseReducer()
+
+1. usage in state-management
+2. alternative of useState()
+3. useReducer(reducerFunc,initialSate)
+4. newState=reducer(currentState,action)
+5. returns a tuple -[newState,dispatch]
+
+```jsx
+
 ```
