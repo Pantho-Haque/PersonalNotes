@@ -1,5 +1,7 @@
 - [installation](#installation)
 - [Router setup](#router-setup)
+    - [useParams()](#useparams)
+    - [useNavigate()](#usenavigate)
 - [Layout](#layout)
 - [Component](#component)
   - [class component](#class-component)
@@ -28,6 +30,7 @@
     - [create your own useState](#create-your-own-usestate)
     - [Rules](#rules)
     - [syntax](#syntax)
+    - [fetching data from server](#fetching-data-from-server)
 - [useEffect](#useeffect)
     - [side effect](#side-effect)
     - [syntax](#syntax-1)
@@ -36,6 +39,11 @@
 - [useMemo()](#usememo)
 - [useRef()](#useref)
 - [UseReducer()](#usereducer)
+    - [Pattern](#pattern)
+    - [Fetching data](#fetching-data)
+- [Custom Hook](#custom-hook)
+- [styling in React](#styling-in-react)
+- [css in js](#css-in-js)
 
 ### installation
 
@@ -47,18 +55,109 @@
 ### Router setup
 
 ```jsx
-    import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+// App.js
 
-    export default function Routes(){
-        return (
-            <Router>
-            <Switch>
-                <Route path="/" exact component={} />
-                <Route path="/../" exact component={} />
-            </Switch>
-            </Router>
-        );
-    };
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home.jsx";
+import Error from "./Error.jsx";
+import Dyna from "./Dyna.jsx";
+
+export function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        {/* if we want to send props in Home page */}
+        {/* using children */}
+        <Route path="/" element={<Home />} />
+
+        {/* nested route  
+            this will show "Home" in "/home" direction
+            both "Home" & "p" in "/home/world" direction
+            
+            in "/home/world" "p" will be placed where <Outlet/> component has been declared
+        */}
+        <Route path="/home/*" element={<Home />}>
+          <Route path="world" element={<p>Hello world</p>} />
+        </Route>
+
+        {/* Dynamic Link -
+              Dyna Component will receive a props which contains a specified value.
+
+              Value will be in {props.match.params.category} and
+              {props.match.params.topic}
+
+              using useParams() hook:
+
+              import {useParams} from "react-router-dom"
+              const {catagory,topic}=useParams();
+
+          */}
+        <Route path="/dynamicLinks/:catagory/:topic" element={<Dyna />} />
+
+        {/* notfound component . it must be below everyone*/}
+        <Route element={<Error />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+// component.js
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
+
+export function Component() {
+  return (
+    <div>
+      <Link to="/"> press </Link>
+
+      {/* Link cant take styling but NavLink can */}
+      <NavLink
+        to="/"
+        activeStyle={{
+          fontWeight: "bold",
+          color: "red",
+        }}
+        className={(info) => (info.isActive ? classes.active : "")}
+      >
+        press
+      </NavLink>
+
+      {/* Redirection */}
+      <Navigate to="/" />
+    </div>
+  );
+}
+```
+
+##### useParams()
+
+```jsx
+import {useParams} from "react-router-dom";
+// if Route path="/home/:post/:id"
+// then tha value we pass through post and id variable will get by useParams() hook easily
+const { post, id } = useParams();
+```
+
+##### useNavigate()
+
+```jsx
+const navigate= useNavigate();
+
+// redirection on click a button 
+function goToPosts(){
+  navigate("/posts",{
+    replace:true
+  })
+}
+
+// go back to previous page 
+function goBack(){
+  navigate(-1); // to immidiate previous page
+  navigate(-2); // to the previous of previous page 
+}
 ```
 
 ### Layout
@@ -109,7 +208,7 @@ classComp.print();
 function Comp() {
   function ab() {}
   const bc = () => {};
-  return <>// element</>;
+  return <>element</>;
 }
 
 // calling component
@@ -728,6 +827,44 @@ setValue((prevState) => {
 });
 ```
 
+##### fetching data from server
+
+```jsx
+import { useEffect, useState } from "react";
+
+export default function GetPost() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        setPost(data);
+        setError("");
+      })
+      .catch((err) => {
+        setLoading(false);
+        setPost("");
+        setError(err);
+      });
+    return () => {
+      setLoading(true);
+      setPost("");
+    };
+  }, []);
+
+  return (
+    <>
+      {loading ? "loading" : post.title}
+      {error || null}
+    </>
+  );
+}
+```
+
 ### useEffect
 
 ##### side effect
@@ -810,7 +947,7 @@ useEffect(()=>{
 })
 
 // reference must be declared in ref props of the targeted element
-<input ref={inutRef} type="text" placeholder="enter something" />
+  <input ref={inutRef} type="text" placeholder="enter something" />
 
 
 /************************************************************/
@@ -847,8 +984,157 @@ export default forwardedInput;
 2. alternative of useState()
 3. useReducer(reducerFunc,initialSate)
 4. newState=reducer(currentState,action)
-5. returns a tuple -[newState,dispatch]
+5. returns a tuple - [newState,dispatch]
+
+##### Pattern
+
+```jsx
+import {useReducer} from "react"
+
+const initialState=0;
+const reducer=(state,action)=>{
+  // state is the current value of constant
+  // action is a condition which decides what will be the next value of our state .
+
+  switch(action){
+    case ... :
+      //
+    case ...:
+      //
+    default:
+      //
+  }
+}
+
+export default function Red(){
+  const [state, dispatch] = useReducer(reducer, initialState)
+  // dispatch() takes the value of action.
+  // state defines the value whice is returnd by the reducer function.
+  // initially the value of state is the same of initialState we have set.
+}
+```
+
+##### Fetching data
+
+```jsx
+import React,{ useEffect, userReducer } from "react";
+
+const initialState={
+  loading:true,
+  error:"",
+  post:{}
+}
+
+cosnt reducer=(state,action)=>{
+  switch(action.type){
+    case "SUCCESS":
+      return{
+        loading:false,
+        post:action.result,
+        error:""
+      }
+    case "ERROR":
+      return{
+        loading:false,
+        post:{},
+        error:"Something wrong"
+      }
+    default:
+      return state;
+  }
+}
+
+export default function GetPost() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({type:"SUCCESS",result:data})
+      })
+      .catch((err) => {
+
+        dispatch({type:"ERROR"})
+      });
+    return () => {
+      dispatch();
+    };
+  }, []);
+
+  return(
+    <>
+      {state.loading?"loading":state.post.title}
+      {state.error || null}
+    </>
+  )
+}
+
+```
+
+### Custom Hook
+
+// necessary to share logic
+File: /src/hooks/useWindow.jsx
+
+```jsx
+import { useState, useEffect } from "react";
+
+export default function useWindow(screenSize) {
+  const [onSmallScreen, setOnSmallScreen] = useState(false);
+
+  useeffect(() => {
+    const checkScreenSize = () => {
+      setOnSmallScreen(window.innerWidth < screenSize);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, [screenSize]);
+
+  return onSmallScreen;
+}
+```
+
+// now by importing this function we can easily get the output what I desire.
+
+### styling in React
 
 ```jsx
 
+// inline insertion
+  <p style={{color:"black",backgroundColor:"white"}}>
+  </p>
+
+// global import
+  import "../App.css";
+  export default function Ab(){
+    return (
+      <>
+        <div className="logo"> logo </div>
+      </>
+    );
+  }
+
+// modular import
+  import styles from "../Logo.module.css";
+  export default function Ab(){
+    return (
+      <>
+        <div className={style.logo}> logo </div>
+
+        <div className={`${style.logo} border`}> logo </div>
+
+        <div className={[style.logo, "border"].join(" ")}> logo </div>
+        <- here logo is moduler css and border is global css ->
+
+      </>
+    );
+  }
 ```
+
+### css in js
