@@ -49,7 +49,7 @@
 
 ```sh
     npx create-react-app google-keep --template @chakra-ui
-    npm install react-router-dom
+    npm install react-router-dom react-icons firebase
 ```
 
 ### Router setup
@@ -135,7 +135,7 @@ export function Component() {
 ##### useParams()
 
 ```jsx
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 // if Route path="/home/:post/:id"
 // then tha value we pass through post and id variable will get by useParams() hook easily
 const { post, id } = useParams();
@@ -144,19 +144,19 @@ const { post, id } = useParams();
 ##### useNavigate()
 
 ```jsx
-const navigate= useNavigate();
+const navigate = useNavigate();
 
-// redirection on click a button 
-function goToPosts(){
-  navigate("/posts",{
-    replace:true
-  })
+// redirection on click a button
+function goToPosts() {
+  navigate("/posts", {
+    replace: true,
+  });
 }
 
-// go back to previous page 
-function goBack(){
+// go back to previous page
+function goBack() {
   navigate(-1); // to immidiate previous page
-  navigate(-2); // to the previous of previous page 
+  navigate(-2); // to the previous of previous page
 }
 ```
 
