@@ -17,7 +17,8 @@
   // }
 
   "shell code": {
-    "prefix": "sh",
+    "prefix": "s",
+    "scope":"markdown" ,
     "body": ["```${1}", " ${2}", "```"],
     "description": "shell writting in .md"
   }
