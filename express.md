@@ -143,7 +143,7 @@ app.listen(portNumber, () => {
 });
 
 app.path(); // returns the canonical path of the app as string.
-app.use();
+app.use(); // to run or use any middleware
 ```
 
 #### app.param()
@@ -166,7 +166,7 @@ app.get("/user/:id", (req, res) => {
 
 #### app.route()
 
-_to process different method in same route_
+<i>to process different method in same route</i>
 
 ```js
 app
@@ -175,11 +175,14 @@ app
     res.send("application with get");
   })
   .post((req, res) => {
-    res.send("application with get");
+    res.send("application with post");
   })
   .put((req, res) => {
-    res.send("application with get");
-  })``;
+    res.send("application with put");
+  });
+  .delete((req, res) => {
+    res.send("application with delete");
+  });
 ```
 
 ## Request
@@ -253,3 +256,217 @@ res.cookie("cookieName","cookieValue",{
 
 ## Middleware
 
+1. application level
+2. router level
+3. error-handling
+4. built-in (express.json, express.static)
+5. third party (cookie-parser)
+
+```js
+const middleware1 = (req, res, next) => {
+  // executes js
+  next();
+};
+const middleware2 = (req, res, next) => {
+  // executes js
+  next("an error occurred "); // any value inside next function will consider as an error and runs the error handling middleware .
+};
+app.use(middleware2);
+app.use(middleware1); // order of declaring middleware is important , cause node performs
+```
+
+```js
+// middleware function with additional data we want to pass
+const theFunction = (options) => {
+  // use options
+  const middleware = (req, res, next) => {
+    // executes js
+    next();
+  };
+};
+app.use(theFunction(options));
+```
+
+```js
+// error handling middleware
+const ErrorThrowingMiddleware = (req, res, next) => {
+  // executes js
+  throw new Error("This is an error");
+};
+
+const ErrorHandlingMiddleware = (err, req, res, next) => {
+  // executes js
+  console.log(err.message);
+  res.status(500).send("there is a server side error !");
+};
+app.use(ErrorHandlingMiddleware);
+```
+
+## Router
+
+### Router Setup
+
+#### routerFile.js
+
+```js
+const express = require("express");
+
+const adminRouter = express.Router();
+
+adminRouter.get("/", (req, res) => {
+  // admin dashboard
+});
+
+adminRouter.get("/login", (req, res) => {
+  // admin login function
+});
+
+module.exports = adminRouter;
+```
+
+#### index.js
+
+```js
+const express = require("express");
+const adminRouter = require("./routerFile.js");
+
+const app = express();
+
+app.use("/admin", adminRouter); // thus every hit on /admin route will follow adminRouter
+```
+
+## Router Properties
+
+```js
+const log = (req, res, next) => {
+  console.log("logging");
+  next();
+};
+
+adminRouter.all("*", log); // * -> all route , effects only on adminRouter
+```
+
+## Router params
+
+```js
+// a particular middleware for a particular parameter in a specific route
+adminRouter.param("paramName", (req, res, next, id) => {
+  // when there has any parameter name paramName in any route ,
+  // run this middleware
+  req.paramName = modification(id);
+  next();
+});
+```
+
+```js
+// set a particular behavior for a param and its value in a specific route
+adminRoute.param((paramName, option) => (req, req, next, val) => {
+  if (val === option) next();
+  else res.sendStatus(403);
+});
+adminRoute.param(paramName, option); // declaring
+```
+
+```js
+// how to get the value from url as param
+adminRouter.get("/:param1", (req, res) => {
+  res.send(req.user);
+});
+```
+
+### Router.Route() method
+
+```js
+adminRouter
+  .route("/user")
+  .get((req, res) => {
+    res.send("application with get");
+  })
+  .post((req, res) => {
+    res.send("application with post");
+  })
+  .put((req, res) => {
+    res.send("application with put");
+  });
+  .delete((req, res) => {
+    res.send("application with delete");
+  });
+```
+
+### Router.use() method
+
+```js
+adminRouter.use("use a middleware");
+```
+
+### Route paths
+
+```js
+  "/ab?cd"    -> acd , abcd
+  "/ab+cd"    -> abcd, abbcd, abbbcd and so on
+  "/ab*cd"    -> abcd, ab(anything)cd
+  "/ab(cd)?e" -> abe , abcde
+  "/a/"       -> anything with an "a"
+  "any RegExp"
+```
+
+## Error handling
+
+```sh
+  when we start writing our response using res.write(),
+  headers have been sent to the client ,
+  and when we want to send the request again to the client it occurs an error.
+```
+
+```js
+// express has a default error handling middleware only for synchronous functions or process
+// our customized error handling middleware should be the last middleware of pur app
+app.use((err, req, res, next) => {
+  if (res.headerSent) {
+    next("there was a problem");
+  } else {
+    if (err.message) res.status(500).send(err.message);
+    else res.send("there was a problem");
+  }
+});
+```
+
+```js
+// 404 error handler
+// this middleware should be placed after all route we create
+app.use((req, res, next) => {
+  next("requested url was not found");
+});
+```
+
+```js
+// error handling for asynchronous function
+fs.readFile("/unknownFile", "utf-8", (err, data) => {
+  if (err) next(err); // redirect to default error handling middleware
+  else res.send(data);
+});
+```
+
+```js
+// error handling using try-catch
+try {
+  throw "the error message";
+} catch (err) {
+  next(err);
+}
+```
+
+```js
+// chaining middleware function
+app.get("/", [
+  (req, res, next) => {
+    fs.readFile("/unknownFile", "utf-8", (err, data) => {
+      if (err) next(err); // redirect to default error handling middleware
+      else res.send(data);
+    });
+  },
+  (req, res, next) => {
+    // occurred an error which can be deal by default synchronous error handling middleware
+  },
+]);
+```
