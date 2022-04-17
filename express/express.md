@@ -457,7 +457,7 @@ try {
 ```
 
 ```js
-// chaining middleware function
+// chaining middleware function - when we can have multiple error case
 app.get("/", [
   (req, res, next) => {
     fs.readFile("/unknownFile", "utf-8", (err, data) => {
@@ -469,4 +469,106 @@ app.get("/", [
     // occurred an error which can be deal by default synchronous error handling middleware
   },
 ]);
+```
+
+## FileHandling multer
+
+// to handle multipart data - use multer
+
+```js
+npm i multer
+```
+
+```js
+  const multer = require("multer");
+  const path=require("path");
+// define storage
+const storage = multer.diskStorage({
+  destination:(req,file,cd)=>{
+    // file_returns
+        //   {
+        //     fieldname:"file_name_property",
+        //     originalname:"filenameInUserPc",
+        //     ecoding:"7bit",
+        //     mimetype:"image/png"
+        //   }
+    cb(null,"./upload/")
+  },
+  filename:(req,file,cb)=>{
+    // important File.pdf => importtant-file-3467756347463.pdf
+
+    const fileExt=path.extname(file.originalname);
+    const fileName = file.originalname
+                        .replace(fileExt,"")
+                        .toLowerCase()
+                        .split(" ")
+                        .join("-")
+                        +"-"+Date.now()+fileExt
+
+    cb(null,fileName);
+
+  }
+})
+
+var upload =multer({
+    storage:storage,
+    limits:{
+      fileSize: 1000000 //  1MB
+    },
+    fileFilter:(req,file,cb)=>{
+        // file_returns
+        //   {
+        //     fieldname:"file_name_property",
+        //     originalname:"filenameInUserPc",
+        //     ecoding:"7bit",
+        //     mimetype:"image/png"
+        //   }
+        if(
+          file.mimetype==="image/png" ||
+          file.mimetype==="image/jpg" ||
+          file.mimetype==="image/jpeg"
+        ) {
+          cb(null , true);  // cb(error,IsValid)
+        }else{
+          cb(new Error("only .jpg .png or .jpeg format allowed!"))
+        }
+    }
+  })
+
+
+
+  // upload a single file
+  app.post("/", upload.single("file_name_property"),(req,res)=>{
+    // req.files returns
+    // {
+    //   fieldname:"file_name_property",
+    //         originalname:"filenameInUserPc",
+    //         ecoding:"7bit",
+    //         mimetype:"image/png",
+    //         destination:"./upload/",
+    //         filename:"importtant-file-3467756347463.png",
+    //         path:"upload/importtant-file-3467756347463.png",
+    //         size:344,
+    // }
+    res.send("hello world");
+  })
+
+  //upload multiple files
+  app.post("/", upload.array("file_name_property",NumberOfFile),(req,res)=>{
+    res.send("hello world");
+  })
+
+  //upload multiple files from multiple input fields
+  app.post("/", upload.fields([
+    {name:"file_name_property1",maxCount:NumberOfFile1}
+    {name:"file_name_property2",maxCount:NumberOfFile2}
+  ]),(req,res)=>{
+    res.send("hello world");
+  })
+
+  //not to upload files
+  app.post("/", upload.none(),(req,res)=>{
+    res.send("hello world");
+  })
+
 ```

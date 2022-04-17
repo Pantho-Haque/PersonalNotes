@@ -35,5 +35,5 @@ SELECT * FROM Shippers; -- get all columns from Shippers table
 SELECT Country FROM Customers WHERE Country="Mexico" AND Name="Hunaima"
     -- using where we can filter the data putting a condition
     -- condition can be multiple using AND,OR,NOT operator
-    
+
 ```

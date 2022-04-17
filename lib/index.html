@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                screens: {
+                    sm: "480px",
+                    md: "768px",
+                    lg: "976px",
+                    xl: "1440px",
+                },
+                colors: {
+                    blue: "#1fb6ff",
+                    purple: "#7e5bef",
+                    pink: "#ff49db",
+                    orange: "#ff7849",
+                    green: "#13ce66",
+                    yellow: "#ffc82c",
+                    "gray-dark": "#273444",
+                    gray: "#8492a6",
+                    "gray-light": "#d3dce6",
+                },
+                fontFamily: {
+                    sans: ["Graphik", "sans-serif"],
+                    serif: ["Merriweather", "serif"],
+                },
+                extend: {
+                    spacing: {
+                        128: "32rem",
+                        144: "36rem",
+                    },
+                    borderRadius: {
+                        "4xl": "2rem",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <!-- <p class="text-xl">hi there</p>
+    <iframe title="vimeo-player" src="https://player.vimeo.com/video/696253278?h=af464a7da8" frameborder="0" allowfullscreen></iframe> -->
+
+    <div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        <p>
+            শিক্ষিত ও রুচিশীল গৃহিণীদের অনেকেই প্রতিভা থাকা সত্ত্বেও নানাবিধ কারণে গৃহস্থালির কাজের পাশাপাশি বাইরে গি
+        </p>
+    </div>
+    <div>
+        <p>
+            শিক্ষিত ও রুচিশীল গৃহিণীদের অনেকেই প্রতিভা থাকা সত্ত্বেও নানাবিধ কারণে গৃহস্থালির কাজের পাশাপাশি বাইরে গি
+        </p>
+    </div>
+</body>
+
+</html>
