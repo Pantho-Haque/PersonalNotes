@@ -8,56 +8,88 @@
     <title>Tailwind CSS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                screens: {
-                    sm: "480px",
-                    md: "768px",
-                    lg: "976px",
-                    xl: "1440px",
-                },
-                colors: {
-                    blue: "#1fb6ff",
-                    purple: "#7e5bef",
-                    pink: "#ff49db",
-                    orange: "#ff7849",
-                    green: "#13ce66",
-                    yellow: "#ffc82c",
-                    "gray-dark": "#273444",
-                    gray: "#8492a6",
-                    "gray-light": "#d3dce6",
-                },
-                fontFamily: {
-                    sans: ["Graphik", "sans-serif"],
-                    serif: ["Merriweather", "serif"],
-                },
-                extend: {
-                    spacing: {
-                        128: "32rem",
-                        144: "36rem",
-                    },
-                    borderRadius: {
-                        "4xl": "2rem",
-                    },
-                },
-            },
-        };
+        // tailwind.config = {
+        //     theme: {
+        //         screens: {
+        //             sm: "480px",
+        //             md: "768px",
+        //             lg: "976px",
+        //             xl: "1440px",
+        //         },
+        //         colors: {
+        //             blue: "#1fb6ff",
+        //             purple: "#7e5bef",
+        //             pink: "#ff49db",
+        //             orange: "#ff7849",
+        //             green: "#13ce66",
+        //             yellow: "#ffc82c",
+        //             "gray-dark": "#273444",
+        //             gray: "#8492a6",
+        //             "gray-light": "#d3dce6",
+        //         },
+        //         fontFamily: {
+        //             sans: ["Graphik", "sans-serif"],
+        //             serif: ["Merriweather", "serif"],
+        //         },
+        //         extend: {
+        //             spacing: {
+        //                 128: "32rem",
+        //                 144: "36rem",
+        //             },
+        //             borderRadius: {
+        //                 "4xl": "2rem",
+        //             },
+        //         },
+        //     },
+        // };
     </script>
 </head>
 
 <body>
-    <!-- <p class="text-xl">hi there</p>
-    <iframe title="vimeo-player" src="https://player.vimeo.com/video/696253278?h=af464a7da8" frameborder="0" allowfullscreen></iframe> -->
+    <!-- <div class=" h-screen bg-gray-200 flex justify-center items-center text-center ">
+        <div class="max-w-sm mx-auto p-8 bg-white rounded-xl shadow-md space-y-2 ">
+            <image class="object-cover h-24 mx-auto rounded-full ring-4 ring-gray-600 " src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80 " />
+            <div class="space-y-0.5 ">
+                <p class="text-lg text-black font-semibold ">Learn with Pantho</p>
+                <p class="text-gray-500 font-semibold ">Youtube Channel</p>
+            </div>
 
-    <div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-        <p>
-            শিক্ষিত ও রুচিশীল গৃহিণীদের অনেকেই প্রতিভা থাকা সত্ত্বেও নানাবিধ কারণে গৃহস্থালির কাজের পাশাপাশি বাইরে গি
+            <button class="px-4 py-1 border border-purple-200 rounded-full text-sm text-purple-600 font-semibold ">
+            Visit now
+          </button>
+
+        </div>
+    </div> -->
+
+    <div class="container bg-gray-300 min-h-screen mx-auto pt-16">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80 " alt="" class="w-60 aspect-square float-right" />
+
+        <img src="https://i.pinimg.com/originals/62/3a/a8/623aa8f9933ee9a286871bf6e0782538.jpg" alt="" class="w-60 aspect-video float-left object-cover" />
+
+        <p class="clear-left">
+            Maybe we can live without libraries, people like you and me. Maybe. Sure, we're too old to change the world, but what about that kid, sitting down, opening a book, right now, in a branch at the local library and finding drawings of pee-pees and wee-wees
+            on the Cat in the Hat and the Five Chinese Brothers? Doesn't HE deserve better? Look. If you think this is about overdue fines and missing books, you'd better think again. This is about that kid's right to read a book without getting his mind
+            warped! Or: maybe that turns you on, Seinfeld; maybe that's how y'get your kicks. You and your good-time buddies.
         </p>
-    </div>
-    <div>
-        <p>
-            শিক্ষিত ও রুচিশীল গৃহিণীদের অনেকেই প্রতিভা থাকা সত্ত্বেও নানাবিধ কারণে গৃহস্থালির কাজের পাশাপাশি বাইরে গি
-        </p>
+
+
+
+        <!-- 2nd -->
+
+        <!-- <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80 " alt="" class="break-after-page  w-full aspect-square">
+
+        <img src="https://i.pinimg.com/originals/62/3a/a8/623aa8f9933ee9a286871bf6e0782538.jpg" alt="" class="w-full aspect-video">
+
+        <img src="https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png" alt="" class="w-full aspect-square ">
+
+        <img src="https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg" alt="" class="w-full aspect-video">
+
+        <img src="https://jw-webmagazine.com/wp-content/uploads/2020/03/Kimetsu-no-YaibaDemon-Slayer.jpg" alt="" class="w-full aspect-video">
+        <img src="https://jw-webmagazine.com/wp-content/uploads/2020/03/Kimetsu-no-YaibaDemon-Slayer.jpg" alt="" class="w-full aspect-video">
+        <img src="https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg" alt="" class="w-full aspect-video  ">
+
+        <img src="https://jw-webmagazine.com/wp-content/uploads/2020/03/Kimetsu-no-YaibaDemon-Slayer.jpg" alt="" class="w-full aspect-video break-before-column ">
+        <img src="https://jw-webmagazine.com/wp-content/uploads/2020/03/Kimetsu-no-YaibaDemon-Slayer.jpg" alt="" class="w-full aspect-video"> -->
     </div>
 </body>
 
