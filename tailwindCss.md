@@ -1,5 +1,32 @@
 # tailwind css
 
+```sh
+npm init -y
+npm i -D tailwindcss
+npx tailwindcss init
+
+// src/input.css
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+// package.json -> scripts{
+
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+}
+// tailwind.cnfig.js
+    module.exports = {
+        content: ["./public/**/*.{html,js}"],
+        theme: {
+            extend: {},
+        },
+        plugins: [],
+    }
+// index.html
+    <link rel="stylesheet" href="../src/output.css">
+
+    
+```
+
 ## Layout
 
 ### Aspect-{ratio}
