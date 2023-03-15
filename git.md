@@ -38,6 +38,10 @@
 
 ```sh
     git status
+    git log
+    git log <number>
+    git log --oneline
+    git log --oneline <number>
 ```
 
 ### Add file
