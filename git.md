@@ -47,13 +47,18 @@
 ### Add file
 
 ```sh
-    git add
+                      // -> to make a file staged from
+    git add --all     // main directory
+    git add .         // current directory
+    git add *         // all files in the current directory except ones that begin with a period
+    git reset // to make a files unstaged
 ```
 
 ### Commit
 
 ```sh
     git commit -m " "
+    git reset HEAD~     // reset to working directory from local repo
 ```
 
 ### Branch
@@ -91,7 +96,7 @@
 ### Remove a remote repo
 
 ```sh
-    git remove <remote_name>
+    git remote remove <remote_name>
 ```
 
 ### Clone
