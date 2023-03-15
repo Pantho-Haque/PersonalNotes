@@ -7,6 +7,8 @@
   - [Branch](#branch)
 - [Remote Repository](#remote-repository)
   - [Add remote repository](#add-remote-repository)
+  - [Remote Status](#remote-status)
+  - [Remove a remote repo](#remove-a-remote-repo)
   - [Clone](#clone)
   - [Pull](#pull)
   - [Push](#push)
@@ -73,8 +75,19 @@
                 |     |     |repo name|   |                        |
 
     // A remote repository can have any name. It’s common practice to name the remote repository ‘origin’.
+```
 
+### Remote Status
+
+```sh
     git remote -v       // list of all remote repositories
+    git branch -r       // list of remote branches
+```
+
+### Remove a remote repo
+
+```sh
+    git remove <remote_name>
 ```
 
 ### Clone
