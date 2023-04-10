@@ -17,10 +17,10 @@
 - [Controller](#controller)
   - [index](#index)
   - [show](#show)
+  - [search](#search)
   - [store](#store)
   - [update](#update)
   - [delete](#delete)
-  - [search](#search)
 
 # Installation
 
@@ -213,6 +213,26 @@ class DatabaseSeeder extends Seeder
     Route::get("/users/{id}", [UserController::class, 'show']);
 ```
 
+## search
+
+```php
+    // search from table where the query matches with
+    //name or email
+
+    public function search($query)
+    {
+        return User::where('email', 'like', '%'.$query.'%')
+            ->orWhere('name', 'like', '%'.$query.'%')
+            ->get();
+    }
+
+    // the routing
+
+    Route::get("/users/search/{query?}", [UserController::class, 'search']);
+
+
+```
+
 ## store
 
 ```php
@@ -289,28 +309,5 @@ class DatabaseSeeder extends Seeder
     // the routing
 
     Route::delete("/users/{id}", [UserController::class, 'destroy']);
-
-```
-
-## search
-
-```php
-    // search from table where the query matches with
-    //name or email
-
-    public function search($query)
-    {
-        if(empty($query)) return User::all();
-
-        else return User::where('email', 'like', '%'.$query.'%')
-            ->orWhere('name', 'like', '%'.$query.'%')
-            ->get();
-        // return gettype($query);
-    }
-
-    // the routing
-
-    Route::get("/users/search/{query?}", [UserController::class, 'search']);
-
 
 ```
