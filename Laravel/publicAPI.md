@@ -1,3 +1,27 @@
+- [Installation](#installation)
+  - [Project](#project)
+    - [Create a project](#create-a-project)
+    - [Run the server](#run-the-server)
+- [Routing](#routing)
+  - [Route](#route)
+    - [web.php](#webphp)
+    - [api.php](#apiphp)
+- [Database](#database)
+  - [command](#command)
+  - [.env](#env)
+  - [create\_user\_table.php](#create_user_tablephp)
+    - [migrate to database](#migrate-to-database)
+  - [UserSeeder.php](#userseederphp)
+  - [DatabaseSeeder.php](#databaseseederphp)
+    - [seed to database](#seed-to-database)
+- [Controller](#controller)
+  - [index](#index)
+  - [show](#show)
+  - [store](#store)
+  - [update](#update)
+  - [delete](#delete)
+  - [search](#search)
+
 # Installation
 
 ## <u>Project</u>
