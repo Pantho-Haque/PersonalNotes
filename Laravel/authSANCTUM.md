@@ -8,7 +8,7 @@
 - [Registration](#registration)
   - [controller](#controller)
   - [Frontend req](#frontend-req)
-- [Get My data](#get-my-data)
+- [Get User data](#get-user-data)
   - [controller](#controller-1)
   - [Frontend req](#frontend-req-1)
 - [Logout](#logout)
@@ -17,6 +17,17 @@
 - [Login](#login)
   - [controller](#controller-3)
   - [Frontend req](#frontend-req-3)
+- [Change Password](#change-password)
+  - [controller](#controller-4)
+  - [Frontned req](#frontned-req)
+- [Reset Password](#reset-password)
+  - [creating a model and controller](#creating-a-model-and-controller)
+  - [setting up env file](#setting-up-env-file)
+  - [Password Reset Controller](#password-reset-controller)
+  - [Password reset model](#password-reset-model)
+  - [migrate password reset table](#migrate-password-reset-table)
+  - [config/cors.php](#configcorsphp)
+  - [middleware/Cors.php](#middlewarecorsphp)
 
 # Intallation
 
@@ -137,7 +148,7 @@ let response = await instance.post("/register", formdata);
 console.log(response.data);
 ```
 
-# Get My data
+# Get User data
 
 ## controller
 
@@ -178,7 +189,7 @@ console.log(response.data);
         auth()->user()->tokens()->delete();
         return response([
             "message"=>"Successfully logged out"
-        ]);
+        ],200);
     }
 
     // the routing
@@ -254,6 +265,264 @@ let bodyContent = JSON.stringify({
 
 let response = await instance.post("/login", bodyContent);
 console.log(response.data);
+```
+
+# Change Password
+
+## controller
+
+```php
+    public function change_password(Request $request){
+        $request->validate([
+            'prevPass' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        $user=auth()->user();
+        if(Hash::check($request->prevPass, $user->password)){
+
+            $user->password=Hash::make($request->password);
+            $user->save();
+            return response([
+                "message"=>"Password Changed",
+            ],200);
+        }
+
+        return response([
+            "message"=>"Password didnt match"
+        ]);
+    }
+
+  // the route
+
+  Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post("/changepassword", [UserController::class, 'change_password']);
+  });
+
+```
+
+## Frontned req
+
+```js
+import axios from "axios";
+
+const instance = axios.create({
+  baseURL: "http://127.0.0.1:8000/api",
+  headers: {
+    Accept: "application/json",
+    Authorization: "Bearer 3|McBQPZ3hjNoJjEUqtNWME7WIXes3jsJGiTBPKBsK",
+    "Content-Type": "application/json",
+  },
+});
+
+let bodyContent = JSON.stringify({
+  prevPass: "panthohaque",
+  password: "1907075",
+  password_confirmation: "1907075",
+});
+
+let response = await instance.post("/changepassword", bodyContent);
+console.log(response.data);
+```
+
+# Reset Password
+
+## creating a model and controller
+
+```cmd
+  php artisan make:model PasswordReset -c
+```
+
+## setting up env file
+
+```env
+<!--
+
+1.Login to your gmail account e.g. myaccount.google.com afaik
+2.Go to Security setting and Enable 2 factor (step) authentication
+3.After enabling this you can see app passwords option. Click [here!](https://myaccount.google.com/apppasswords)
+4.And then, from Your app passwords tab select Other option and put your app name and click GENERATE button to get new app password.
+5.Finally copy the 16 digit of password and click done. Now use this password instead of email password to send mail via your app.
+
+ -->
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.om
+MAIL_PORT=587
+MAIL_USERNAME=panthohaque927908@gmail.com
+MAIL_PASSWORD=jfonsxzjwnjxpcby
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="filedrive@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+```
+
+## Password Reset Controller
+
+```php
+
+
+use App\Models\PasswordReset;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Mail\Message;
+use Carbon\Carbon;
+
+class PasswordResetController extends Controller
+{
+    public function send_reset_password_email(Request $request){
+        $request->validate([
+                "email"=>"required|email",
+        ]);
+        $email = $request->email;
+
+        $user=User::where("email",$email)->first();
+        if(!$user){
+            return response([
+                "message"=>"Email Doesnt exist",
+                "status"=>"Failed"
+            ],404);
+        }
+
+        $token = Str::random(60);
+
+        Mail::send('resetpass',['token'=>$token],function(Message $message)use($email){
+            $message->subject("Reset Your Email");
+            $message->to($email);
+        });
+
+        PasswordReset::create([
+            "email"=>$email,
+            "token"=>$token,
+            'created_at'=>Carbon::now()
+        ]);
+
+        return response([
+            "message"=>"Check yout email to reset your password",
+            "status"=>"success"
+        ],200);
+    }
+
+
+    public function resetingPassword(Request $request){
+        $request->validate([
+                "token"=>"required",
+                "password"=>"required|confirmed",
+        ]);
+
+        $token=$request->token;
+        $passreset=PasswordReset::where('token',$token)->first();
+
+         if(!$passreset){
+            return response([
+                "message"=>"Token is Invalid or Expired",
+                "status"=>"Failed"
+            ],404);
+        }
+
+
+        $user=User::where("email", $passreset->email)->first();
+        $user->password= Hash::make($request->password);
+        $user->save();
+
+        return response([
+            "message"=>"Password Reset Success",
+            "status"=>"success"
+        ],200);
+    }
+}
+
+```
+
+## Password reset model
+
+```php
+
+class PasswordReset extends Model
+{
+    use HasFactory;
+    const UPDATED_AT=null;
+
+    protected $fillable=[
+        "email",
+        "token"
+    ];
+}
+
+```
+
+## migrate password reset table
+
+```cmd
+  php artisan migrate
+```
+
+## config/cors.php
+
+```php
+return [
+    'paths' => ['api/*', 'sanctum/csrf-cookie','api'],
+
+    'allowed_methods' => ['*'],
+
+    'allowed_origins' => ['*'],
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => True,
+
+];
+
+```
+
+## middleware/Cors.php
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+
+class Cors
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle($request, Closure $next)
+    {
+        $headers = [
+            'Access-Control-Allow-Origin' => "*",
+            'Access-Control-Allow-Credentials'=>"true",
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, Authorization'
+        ];
+
+        if ($request->getMethod() == "OPTIONS") {
+            return response()->json(['OK'], 200, $headers);
+        }
+
+        $response = $next($request);
+
+        foreach ($headers as $key => $value) {
+            $response->headers->set($key, $value);
+        }
+
+        return $response;
+    }
+}
+
 ```
 
 <!-- php artisan storage:link -->

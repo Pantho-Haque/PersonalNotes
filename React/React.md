@@ -7,7 +7,7 @@
   - [class component](#class-component)
   - [functional component](#functional-component)
 - [props](#props)
-- [State & Lifecycle](#state--lifecycle)
+- [State \& Lifecycle](#state--lifecycle)
 - [this](#this)
 - [Event Handling](#event-handling)
 - [Conditional Rendering](#conditional-rendering)
@@ -26,6 +26,7 @@
     - [creat your own](#creat-your-own)
     - [Providing](#providing)
     - [Consumer](#consumer)
+    - [contextAPI-model](#contextapi-model)
 - [useState](#usestate)
     - [create your own useState](#create-your-own-usestate)
     - [Rules](#rules)
@@ -777,6 +778,53 @@ export default function Content(){
     <></>
   )
 }
+
+```
+
+##### contextAPI-model
+
+```js
+// context.jsx
+
+import React, { useContext, useEffect, useState } from 'react';
+const AuthContext = React.createContext();
+export function useAuth() {
+  return useContext(AuthContext);
+}
+export function AuthProvider({ children }) {
+  const value = {
+    currentUser,
+    ccm,
+    signup,
+    signin,
+    logout,
+    nameUpdateTo,
+    forgetPass,
+    sendEmailVerificationMail,
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+}
+
+
+// App.jsx
+import { AuthProvider } from './server/auth.context.js'; 
+import { ServerProvider } from './server/server.context';
+
+          <AuthProvider>
+            <ServerProvider>
+              <MainRoute />
+            </ServerProvider>
+          </AuthProvider>
+
+// where to use . jsx
+import { useAuth } from '../server/auth.context';
+
+const { currentUser } = useAuth();
 
 ```
 
