@@ -1,3 +1,17 @@
+- [Next js](#next-js)
+  - [Setup](#setup)
+  - [Routing](#routing)
+  - [Dynamic routing](#dynamic-routing)
+  - [Layout](#layout)
+  - [Fallback Loading](#fallback-loading)
+  - [Error handeling (client side)](#error-handeling-client-side)
+  - [404 not-found page](#404-not-found-page)
+  - [Image optimization](#image-optimization)
+  - [Font optimization](#font-optimization)
+  - [Metadata](#metadata)
+  - [Data fetching](#data-fetching)
+  - [Progressive Rendering](#progressive-rendering)
+
 # Next js
 
 - react - conserns with user interface only
