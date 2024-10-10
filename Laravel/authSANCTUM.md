@@ -528,3 +528,5 @@ class Cors
 <!-- php artisan storage:link -->
 <!-- link given in database -> public/backendfiles/9/profilepic.jpg -->
 <!-- link can be access by that file -> http://127.0.0.1:8000/storage/backendfiles/9/profilepic.jpg -->
+
+
