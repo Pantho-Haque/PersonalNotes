@@ -1,4 +1,4 @@
-**calculation in heighr datatype**
+**calculation in heigher datatype**
 
 double 
 float
