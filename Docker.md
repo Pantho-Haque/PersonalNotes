@@ -136,5 +136,66 @@ CMD ["npm", "run", "dev"]
 
 
 #docker build -t todo-web:1.0 .
-#docker run -d -p -name todoApp 3000:3000 todo-web:1.0
+#docker run -d --name todoApp -p 3000:3000 todo-web:1.0
+```
+
+## Docker Compose [#](https://youtu.be/SXwC9fSwct8?si=TuDxPL4TSs9bAVhe)
+
+### Why ?
+
+- microservice application
+- set of container(different application) who run together and communicate in one environment.
+- To manage multple docker containers (each container have different config)
+
+### use case
+
+- assume we have 2 docker container
+- to connect them we have to
+
+  - Create a docker network `docker network create {net_name}`
+  - Run a mongodb server from mongodb image in docker hub
+
+```bash
+    docekr run -d \
+    -p 27017:27017 \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=password \
+    --network {net_name} \
+    --name mongodb
+    mongo
+```
+
+- Run a mongoexpress server from mongoexpress image in docker hub
+
+```bash
+    docekr run -d \
+    -p 8081:8081 \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD=passsword \
+    -e ME_CONFIG_MONGODB_SERVER=mongodb \
+    --network {net_name} \
+    --name mongo-express
+    mongo-express
+```
+
+- those containers are now able to communicate with each other as they are in the same network.
+
+### Easy solution -> Docker Compose
+
+- an `yml` file defined with all configuration of list of containers we want to start together
+- consist the ability to modify those containers to start or stop them.
+- structured way to contain docker commands
+
+```
+version: '3.1'
+
+services:
+  {container_name}:
+    image:{image_name}:{port_name}
+    ports:
+      -{HOST_PORT}:{CONTAINER_PORT}
+    environment:
+      {key}:{value}
+    depends_on:
+      -"{container_name as services}"
 ```
