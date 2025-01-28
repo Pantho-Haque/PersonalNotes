@@ -80,6 +80,9 @@
   - automatically generates a container name if you dont specify
     - `docker run --name {container_name} -d {image_name}:{tag}`
     - we can use that name instead of using that id.
+  - To get a clean workspace
+    - `docker container rm -f $(docker container ls -q)`
+    - `docker image rm -f $(docker image ls -q)`
 - We can skip the pull part.As Docker automatically pulls images from Docker Hub if its locallly not available.
 
 ## Port Binding
@@ -199,3 +202,45 @@ services:
     depends_on:
       -"{container_name as services}"
 ```
+
+- so if we want to do the previous task using docker compose
+
+```yml
+version: '3.1'
+
+services:
+  frontend:
+    build: path/to/file
+    ports:
+      - 3000:3000
+    environment:
+      MONGO_DB_USERNAME:${pantho}
+      MONGO_DB_PASSWORD:${pantho}
+  mongodb:
+    image:mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:admin
+      MONGO_INITDB_ROOT_PASSWORD:password
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME:admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD:passsword
+      ME_CONFIG_MONGODB_SERVER:mongodb
+    depends_on:
+      - "mongodb"
+```
+
+- `docker-compose -f services.yml up -d`->execute the file
+  - `-d` -> detach mode
+  - `--project-name {the name}` -> to give the prefix for wach container
+- `docker-compose -f services.yml down`-> to stop all container in the yml
+- `docker-compose -f services.yml stop`-> to stop all container in the yml but it preserves the states
+- `docker-compose -f services.yml start`-> to retrieve all container in the yml from its preserves the states
+- Use docker compose for Docker Compose v2 (integrated with Docker).
+- Use docker-compose if you install the standalone binary.
