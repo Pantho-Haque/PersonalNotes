@@ -85,8 +85,85 @@ my-trpc-app/
 
 ```
 
-## Route and Procures
+## Setting up a tRPC Router & Context
+
+```ts
+// server/trpc.ts
+import { initTRPC } from "@trpc/server";
+
+// creating context for users -> returns an object available for all users.
+export const createContext = () => {
+  return {
+    user: null, // simulates a nonauthenticated state
+  };
+};
+export type Context = ReturnType<typeof createContext>;
+// seuping trpc with our context
+const t = initTRPC.context<Context>().create();
+
+// middleware that checks user is authenticated or not
+const isAuthenticated = t.middleware(({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new Error("Not authenticated");
+  }
+  return next({
+    ctx: {
+      user: ctx.user,
+    },
+  });
+});
+
+// router and procedures
+export const router = t.router;
+export const publicProcedure = t.procedure;
+export const protectedProcedure = t.procedure.use(isAuthenticated);
+```
+
+## Defining Procedures in a Router
+
+```ts
+// server/routers/user.ts
+import { publicProcedure, protectedProcedure, router } from "../trpc";
+import { z } from "zod";
+
+export const userRouter = router({
+  //public procedure
+  getUser: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input }) => {
+      return {
+        id: input.id,
+        name: "John Doe",
+        email: "john@example.com",
+      };
+    }),
+
+  // protected procedure (if you want to restrict access)
+  getSecret: protectedProcedure.query(({ ctx }) => {
+    return {
+      secret: `Your secret is 42, and your user is ${ctx.user}`,
+    };
+  }),
+});
+```
+
+##  Combining Routers
+
+```ts
+// server/routers/_app.ts
+import { router } from '../trpc';
+import { userRouter } from './user';
+
+export const appRouter = router({
+  user: userRouter,
+});
+
+// Export type definitions for the API ->  allows the frontend to infer types automatically 
+export type AppRouter = typeof appRouter;
+```
+
+<!-- ## Route and Procures
 
 - example.com/innovation.hello
   - innovation -> route (like a folder)
-  - hello -> procedure (like a file)
+  - hello -> procedure (like a file) -->
