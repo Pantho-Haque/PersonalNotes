@@ -45,5 +45,28 @@ sudo mv gitpush /usr/local/bin/
 ## Use the Script
 
 ```sh
-gitpush "Your commit message here"
+gitpush "Your commit message here" "targeted branch here"
+```
+
+## Sample output
+
+```sh
+pantho@pantho-c3203:~/Desktop/PersonalNotes$ gitpush "new tool- gitpush" main
+Switched to a new branch 'main'
+[main 4d5f877] new tool- gitpush
+ 1 file changed, 49 insertions(+)
+ create mode 100644 gitpush.md
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 679 bytes | 679.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'main' on GitHub by visiting:
+remote:      https://github.com/Pantho-Haque/PersonalNotes/pull/new/main
+remote:
+To https://github.com/Pantho-Haque/PersonalNotes.git
+ * [new branch]      main -> main
 ```
