@@ -1,0 +1,230 @@
+# Next Js- App Router (Cheetsheet)
+
+## Installation 
+
+### Automatic
+
+```bash
+    npx create-next-app@latest
+```
+
+### Manual 
+
+```bash 
+    pnpm i next@latest react@latest react-dom@latest
+```
+```json
+./package.json
+
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+
+```
+
+## Project structure 
+
+### Top level folders 
+- Used to organize your application's code and static assets
+- They are
+    - **app** 
+    - **public**
+
+### Top level Files
+- Used to
+    - configure your application
+    - manage dependencies
+    - run middleware
+    - integrate monitoring tools
+    - define environment variables
+- They are
+    - **next.config.js**
+    - **.eslintrc.json**(Configuration file for ESLint)
+    - **tsconfig.json**
+    - **jsconfig.json**
+    - **package.json**
+    - **instrumentation.ts**(OpenTelemetry and Instrumentation file)
+    - **middleware.ts**(Next.js request middleware)
+    - **.env**
+    - **.env.local**(Local environment variables)
+    - **.env.production**(Production environment variables)
+    - **.env.development**(Development environment variables)
+    - **.gitignore**
+    - **next-env.d.ts**(TypeScript declaration file for Next.js)
+
+### Routing Files
+
+- **layout**(Layout)
+- **page**(Page)
+- **loading**(Loading UI)
+- **not-found**(Not found UI)
+- **error**(Error UI)
+- **global-error**(Global error UI)
+- **route**(API endpoint)
+- **template**(Re-rendered layout)
+- **default**(Parallel route fallback page)
+
+### Dynamic routes
+- **[folder]** (Dynamic route segment)
+- **[...folder]** (Catch-all route segment)
+- **[[...folder]]** (Optional catch-all route segment)
+
+### Route Groups and private folders
+
+- **(folder)** (Group routes without affecting routing)
+- **_folder** (Opt folder and all child segments out of routing)
+
+## Layouts
+- shared between multiple pages
+- preserve state
+- remain interactive
+- dont rerender
+
+
+## Linking and Navigation 
+
+### Server rendering 
+Server component (pages and layouts by default behaviour) payload is generated on the server before it sent to the client.
+
+- Two types 
+    - **Static rendering:** happens on build time.
+    - **Dynamic rendering:** happens on request time.
+
+### Prefetching
+Process of loading a route in the background before the user navigates to it to application feel instant.
+
+- Prefetching depends on the type of route
+    - **static roiutes:** fully prefetched
+    - **dynamic routes:** no prefetch or partially prefetch if loading.tsx is present to avoid unnecessary work on the server.
+
+### Streaming
+The server to send parts of a dynamic route to the client as soon as they're ready
+- To use streaming, create a loading.tsx in your route folder
+
+### Client-side transitions
+
+- it means, traditionally navigation to a server-rendered page triggers a full page load, which 
+    - clears state
+    - resets scroll position
+    - blocks interactivity
+
+- Next js avoids it using <Link> component.
+
+### Cause of Slow transition
+
+- dynamic routes without loading.tsx
+- dynamic routes without static site generation(SSG)
+- slow network without useLinkStatus or loading indicator.
+- disabled prefetch *usefull for avoiding unnecessary rendering for large list*
+    ```tsx
+        <Link prefetch={false} href="/blog">
+            Blog
+        </Link>
+    ```
+    - unless disabling the prefetch we can prefetch on hover
+    ```tsx
+        <Link
+            href={href}
+            prefetch={active ? null : false}
+            onMouseEnter={() => setActive(true)}
+        >
+            {children}
+        </Link>
+    ```
+- Hydration not completed.
+
+#### SSG 
+- call *generateStaticParams()* to prerender each page on **build time**, otherwise they will be dealedd on per user request on server.
+    - *fetch()* inside the component will also called in server on **build time** resulting HTML saved as static file.
+```tsx
+// /app/posts/[slug]/page.tsx
+
+export async function generateStaticParams() {
+  const posts = await fetch('https://example.com/posts').then(res => res.json())
+  return posts.map(post => ({ slug: post.slug }))
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const res = await fetch(`https://example.com/posts/${params.slug}`)
+  const post = await res.json()
+
+  return <h1>{post.title}</h1>
+}
+```
+- But the content on the page wont update. To make it 
+    1. use incremental static regeneration(ISR)
+        - background rebuild happend after the 60 secs of first user visit.So the contents get updated.
+    ```tsx
+        // top of *page* component
+
+        export const revalidate = 60 // seconds
+    ```
+    2. fetch() revaliation
+    ```ts
+        await fetch('https://example.com/posts/slug', {
+            next: { revalidate: 60 },
+        })
+    ```
+    3. for realtime data update - dynamic redring  so that server renders on every request 
+    ```ts
+        export const dynamic = 'force-dynamic'
+    ```
+    or 
+    ```ts
+        await fetch('https://example.com/posts/slug', {
+            cache: 'no-store',
+        })
+
+    ``
+## Server component
+- Next js uses React API and split into chunks by individual route segments.
+- they are being rendered in **RSC Payload( React server component payload)** which is used to prerender HTML. 
+- need
+    - fetch data from database
+    - use secrets, api keys etc
+    - improve **first contentful paint(FCP)** and stream content progressively
+
+### RSC Payload
+- compact binary representation of react server component tree.
+- used in client to update the Virtual DOM
+- contains 
+    - **rendered result** of server component
+    - **placeholder** for client components and reference to their js files
+    - **props** (which are passed from server component to client components )
+
+### FCP
+- time between start of page loading and nay part of the content is rendered on the browser
+    - FCP < 1.8 => good
+    - 1.8 < FCP > 3 => needs improvement
+    - 3 < FCP => poor
+
+## Client Component
+- marked with *"use client";* will make all imports and child components considered as client bundle.
+- need 
+    - state
+    - event handlers(onclick)
+    - lifecycle logic(useeffect)
+    - Browser only apis(localstorage,window,navigator)
+    - custom hooks
+ 
+### On the client 
+- **HTML** used for fast non interactive video
+- **RSC** used for reconcile the client and server component tree. 
+- **JavaScript** used for hydrate client component and make app interactive.
+
+> **Hydration** process of attacching *event handler* to the dom.To make the static HTML interactive.
+
+### Preventing environment poisoning
+
+- It's possible to accidentally import server-only code into the client.
+- In Next.js, only environment variables prefixed with ***NEXT_PUBLIC_*** are included in the client bundle. 
+
+- To prevent accidental usage
+    - Server Components **`import 'server-only'`**
+    - Client Components **`import 'client-only'`**
+- Now, if you try to import the server module into a Client Component, or vice versa, there will be a build-time error.
