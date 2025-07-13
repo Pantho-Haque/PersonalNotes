@@ -228,3 +228,61 @@ export default async function Page({ params }: { params: { slug: string } }) {
     - Server Components **`import 'server-only'`**
     - Client Components **`import 'client-only'`**
 - Now, if you try to import the server module into a Client Component, or vice versa, there will be a build-time error.
+
+
+## Fetching Data
+
+### For server components 
+    - fetch api
+    ```
+    export default async function Page() {
+        const data = await fetch('https://api.vercel.app/blog')
+        const posts = await data.json()
+    ``` 
+    - orm or database
+    ```
+    import { db, posts } from '@/lib/db'
+    
+    export default async function Page() {
+        const allPosts = await db.select().from(posts) 
+    ```
+### For client component
+    - `use` hook
+    - community library(react query or SWR)
+
+### Duplicate requests !
+### Streaming 
+- basically it shows loading wwhile server gets the data and create the component and send it to client.
+- `async/await` in server component wil opt into dyamic rendering (fetched on every user request).
+- so break the html into smaller chunks and send them one by one.
+
+#### with `loading.js`
+- wraps the `page.tsx` with a `<Suspanse>` block.
+- for more granular streaming we need to use `<Suspanse>` on each parts of streaming.
+
+#### with `<Suspanse>`
+```
+<Suspense fallback={<BlogListSkeleton />}>
+    <BlogList />
+</Suspense>
+```
+
+#### Sequential data fetching 
+- `RootLayout>DashboardLayout>SettingsPage` -> they will be rendered sequentially(one after another)
+-  fetch request can still be sequential if placed after the other. 
+```
+const artist = await getArtist(username)
+const albums = await getAlbums(username)
+```
+
+#### Parallel data fetching 
+- `layout.tsx` and `page.tsx` are rendered parallelly. 
+- using `Promise.all`, we can parallely call fetch api.
+```
+const [artist, albums] = await Promise.all([artistData, albumsData]) // one fails all fails
+// or
+const [artist, albums] = await Promise.allSettled([artistData, albumsData])
+ ```
+
+#### Preloadinf data !
+## Updating Data !
