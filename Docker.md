@@ -28,6 +28,12 @@
 - packaged all dependencies and configarations, not only code
 - No configurations needed on the server. so Less error
 
+###  why use ? Cz its (`PIS`) 
+
+- Portability 
+- Isolation
+- Scalability 
+
 ## Docker vs VM
 
 |                      | Docker                  | Virtual Machine                    |
@@ -244,3 +250,48 @@ services:
 - `docker-compose -f services.yml start`-> to retrieve all container in the yml from its preserves the states
 - Use docker compose for Docker Compose v2 (integrated with Docker).
 - Use docker-compose if you install the standalone binary.
+  
+
+## Concepts
+- container 
+  - isolated environment 
+  - lost their data when they stop
+- images -> template(application code, libraries, dependencies with other files and softwares) build a container 
+- Dockerfile -> instruction to build a docker image 
+- Docker engine -> runtime that builds image and runs container
+- Registry -> storage or distribution system (docket hub)
+- compose 
+  -tool to run multiple docker container
+  - configures services, networks, and volumes to maintain multiple containers in a single application
+    - service -> containers and their configuration details.
+    - network -> containers to communicate
+    - volume -> persists data outside the container
+
+- port binding -> maps host and container ports
+- volume 
+  - keep data persistent btwn containers or btwn host and container
+	- bind mount(type:bind)
+    - maps specific file/directory from host(source) into container(target)
+		- any change on one node directly reflects to another 
+	- named volume(type:volume)
+		- docker managed volume -> stored in docker storage area
+		- stores the cache or database info in docker storage so that they can be reuse.
+
+- Network
+  - allow containers to communicate 
+	- DOCKER by default creates a bridge network when we `up` and
+		  allow them to communicate using their service name 
+	- communicate in 2 ways 
+		- Service Names as DNS `redis:6379`
+		
+- network drivers 
+  - bridge(default for single host container) - containers can communicate the container_name or the IP address
+		- creates virtual network(e.g docker0) on the host and give each of the containers separate IP address
+		- keeps isolation from the hosts network stack
+  - host
+    - using host's network stack(no isolation)
+		- shares the hosts IP and ports
+		- no port mapping or container name is required to 
+	- none
+	- overlay -> for multi-host networking(distributed system)
+
