@@ -286,3 +286,68 @@ const [artist, albums] = await Promise.allSettled([artistData, albumsData])
 
 #### Preloadinf data !
 ## Updating Data !
+## Caching and revelidating 
+
+### fetch() and revalidateTag
+```
+const data = await fetch('https://...', { 
+        cache: 'force-cache',
+        next:{
+            tags:['user']
+            revalidate: 3600 
+        } 
+    })
+```
+### unstable_cache and revalidateTag
+- caches result of the async function.
+```
+import { unstable_cache,revalidateTag } from 'next/cache'
+
+const getCachedUser = unstable_cache(
+  async () => {
+    return getUserById(userId)
+  },
+  [userId], //cache key -> separate cache entry for different use id 
+  {
+    tags: ['user'],
+    revalidate: 3600,
+  }
+)
+
+// Mutate data
+revalidateTag('user')
+
+```
+
+### revalidatePath
+- revalidate a specific route
+```
+import { revalidatePath } from 'next/cache'
+
+revalidatePath('/blog')
+```
+
+## Error handling 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
