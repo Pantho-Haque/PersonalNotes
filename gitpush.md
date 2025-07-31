@@ -13,21 +13,74 @@ nano gitpush
 - inside the file
 
 ```sh
+# #!/bin/bash
+
+# # Check if commit message is provided
+# if [ -z "$1" ]; then
+#   echo "Usage: $0 <commit-message> [branch-name]"
+#   exit 1
+# fi
+
+# # Set branch name to the second argument if provided; otherwise, default to 'pantho'
+# BRANCH_NAME=${2:-pantho}
+
+# git checkout -b "$BRANCH_NAME"
+# git add .
+# git commit -m "$1"
+# git push origin "$BRANCH_NAME"
 #!/bin/bash
 
-# Check if commit message is provided
-if [ -z "$1" ]; then
-  echo "Usage: $0 <commit-message> [branch-name]"
+usage() {
+  echo "Usage:"
+  echo "  $0 -m <commit-message> [-b <branch-name>]"
+  echo "  or"
+  echo "  $0 <commit-message> [branch-name]"
   exit 1
+}
+
+# Default branch name
+BRANCH_NAME="pantho"
+COMMIT_MESSAGE=""
+
+# Check if the first argument is "-m". If yes, use flag mode; otherwise, positional mode.
+if [ "$1" == "-m" ]; then
+  # Flag mode using getopts
+  while getopts "m:b:" opt; do
+    case "$opt" in
+      m) COMMIT_MESSAGE="$OPTARG" ;;
+      b) BRANCH_NAME="$OPTARG" ;;
+      *) usage ;;
+    esac
+  done
+else
+  # Positional mode
+  if [ -z "$1" ]; then
+    usage
+  fi
+  COMMIT_MESSAGE="$1"
+  if [ -n "$2" ]; then
+    BRANCH_NAME="$2"
+  fi
 fi
 
-# Set branch name to the second argument if provided; otherwise, default to 'pantho'
-BRANCH_NAME=${2:-pantho}
+# Check if commit message is provided
+if [ -z "$COMMIT_MESSAGE" ]; then
+  usage
+fi
 
-git checkout -b "$BRANCH_NAME"
+# Check if the branch exists; if yes, switch to it, otherwise create and switch to it
+if git rev-parse --verify "$BRANCH_NAME" > /dev/null 2>&1; then
+  git checkout "$BRANCH_NAME"
+else
+  git checkout -b "$BRANCH_NAME"
+fi
+
+git diff --stat
 git add .
+echo "staged the files"
 git commit -m "$1"
 git push origin "$BRANCH_NAME"
+
 ```
 
 - make it executable
