@@ -96,12 +96,13 @@ unordered_set<int> us;         // O(1) avg
 
 Think of a stack of plates.
 
-```mermaid
-graph TD
-    A[Push 3] --> B[Push 2]
-    B --> C[Push 1]
-    C --> D[Stack: 1, 2, 3]
-    D --> E[Pop: Returns 1]
+```text
+push 3
+push 2
+push 1
+
+stack: 1, 2, 3
+pop: returns 1
 ```
 
 ```cpp
@@ -115,11 +116,13 @@ st.pop(); // Removes 1
 
 Think of a line at a store.
 
-```mermaid
-graph LR
-    A[In: 1] --> B[In: 2]
-    B --> C[Queue: 1, 2, 3]
-    C --> D[Out: Returns 1]
+```text
+in: 1
+in: 2
+in: 3
+
+queue: 1, 2, 3
+out: returns 1
 ```
 
 ```cpp
@@ -128,7 +131,6 @@ q.push(1);
 q.front(); // Returns 1
 q.pop();   // Removes 1
 ```
-
 ---
 
 ## 6. Advanced Competitive Programming Concepts
@@ -172,30 +174,8 @@ graph LR
 
 **BFS (Breadth-First Search)** - Level by Level (Shortest Path in unweighted graph)
 
-```mermaid
-graph TD
-    Root((1)) --> L1_1((2))
-    Root --> L1_2((3))
-    L1_1 --> L2_1((4))
-    L1_1 --> L2_2((5))
-    L1_2 --> L2_3((6))
-
-    style Root fill:#f99
-    style L1_1 fill:#9f9
-    style L1_2 fill:#9f9
-    style L2_1 fill:#99f
-    style L2_2 fill:#99f
-    style L2_3 fill:#99f
-```
+![BFS](https://domiknows.vercel.app/api/cdn/BFS.png)
 
 **DFS (Depth-First Search)** - Deep Dive (Backtracking, Pathfinding)
 
-```mermaid
-graph TD
-    Root((1)) --> A((2))
-    A --> B((3))
-    B --> C((4))
-    Root -.-> D((5))
-
-    linkStyle 0,1,2 stroke:red,stroke-width:2px;
-```
+![DFS](https://domiknows.vercel.app/api/cdn/DFS.png)

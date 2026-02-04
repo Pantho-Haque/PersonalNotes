@@ -8,27 +8,7 @@ A **Internal Virtual Environment** is a self-contained directory tree that conta
 
 It prevents dependency conflicts. One project might need `Django 2.0` while another needs `Django 4.0`. Installing everything globally causes chaos.
 
-```mermaid
-graph TD
-    subgraph "Global Python"
-        G[Global Site-Packages] --> P1[Package A v1.0]
-        G --> P2[Package B v1.0]
-    end
-
-    subgraph "Project A (venv)"
-        VA[Local Site-Packages] --> PA[Package A v2.0]
-        VA --> PB[Package B v1.5]
-    end
-
-    subgraph "Project B (venv)"
-        VB[Local Site-Packages] --> PC[Package A v1.0]
-        VB --> PD[Package C v3.0]
-    end
-
-    style G fill:#f9f,stroke:#333
-    style VA fill:#bfb,stroke:#333
-    style VB fill:#bbf,stroke:#333
-```
+![venv](https://domiknows.vercel.app/api/cdn/pythonVenv.png)
 
 ### Commands
 
@@ -86,33 +66,6 @@ def solve():
 
 if __name__ == '__main__':
     solve()
-```
-
-### Essential Libraries (Visualized)
-
-```mermaid
-mindmap
-  root((Python CP Libs))
-    Collections
-      deque (O(1) popleft)
-      Counter (Frequency map)
-      defaultdict
-    Heapq
-      heappush (Min Heap)
-      heappop
-    Itertools
-      permutations
-      combinations
-      product
-    Bisect
-      bisect_left (Binary Search)
-      insort
-    Math
-      gcd
-      lcm
-      factorial
-    Sys
-      setrecursionlimit
 ```
 
 ### Time Complexity & PyPy
