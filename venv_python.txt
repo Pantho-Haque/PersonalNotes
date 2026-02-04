@@ -1,8 +1,0 @@
-python -m venv env_name
-cd env_name/Scripts/activate.bat
-// installing ...
-pip freeze > req.txt
-
-
-// to install the contentc in req.txt
-pip install req.txt
